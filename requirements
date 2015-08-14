@@ -1,0 +1,22 @@
+**list of dependencies:**
+Installation of the following packages / libraries are needed to properly utilize TCB.
+
+- python-openstackclient
+- python-keystoneclient
+- python-glanceclient
+- python-novaclient
+- python-neutronclient
+- python-cinderclient
+- python-swiftclient
+- python-bugzilla
+- lauchpadlib
+- behave
+- python-jenkins
+- gerritlib
+- httplib2  (I’ve run into scenarios where I needed to make my own REST call)
+- libvirt-python (because I need direct access to libvirt for nova tests)
+- untangle (to easily map XML to python dicts)
+- pyyaml (because I’m sure someone will need config files)
+- toolz  (strictly not necessary, but a good idea.  Provides functional python)
+- pyrsistent  (as above, providing immutable data structures)
+- mypy-lang  (recommendation for python3+.  optional static type checking)
