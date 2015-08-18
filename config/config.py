@@ -36,3 +36,7 @@ hostnodes = dict(
 logging = dict(
     log_dir='/tmp/rhea'
 )
+
+rdo_clones = dict(
+    base='/path/to/project/clone'
+)
