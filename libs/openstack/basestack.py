@@ -29,7 +29,7 @@ class BaseStack(object):
         :rtype : list of methods from component name space.
         """
         methodlist = [method for method in dir(component)
-                      if callable(getattr(component, method) and not method.startswith('__'))]
+                      if callable(getattr(component, method)) and not method.startswith('__')]
         return methodlist
 
     def component_path(self):
