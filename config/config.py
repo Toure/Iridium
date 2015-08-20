@@ -34,7 +34,7 @@ hostnodes = dict(
 )
 
 logging = dict(
-    log_dir='/tmp/rhea'
+    log_dir='/tmp/iridium'
 )
 
 rdo_clones = dict(

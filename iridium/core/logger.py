@@ -102,6 +102,6 @@ from config import config
 log_dir = config.logging["log_dir"]
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)
-log_name = os.path.join(log_dir, "rhea")
+log_name = os.path.join(log_dir, "iridium")
 
 glob_logger = get_simple_logger(__name__, log_dir)

@@ -13,9 +13,9 @@ except ImportError:
 
 import os
 
-from rhea.core import commander
-from rhea.core.logger import glob_logger
-from rhea.core.commander import Result
+from iridium.core import commander
+from iridium.core.logger import glob_logger
+from iridium.core.commander import Result
 
 
 class Downloader(object):

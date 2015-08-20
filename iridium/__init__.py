@@ -1,8 +1,6 @@
 __author__ = 'toure'
 
 """
-**Rhea_Tool**
-
 1. Test Translator - function which will interface with the test repository and collect the described functional logic
                      to construct an executable method.
 2. Test Runner - construct which describes the overall framework which makes up majority of the TCB_Tool, that is
@@ -14,7 +12,8 @@ __author__ = 'toure'
 import os
 import importlib
 import sys
-
+from iridium import core
+from config import config
 
 def add_client_to_path(base_dir=None, debug=False, base_clients=None):
     """
@@ -42,7 +41,7 @@ def add_client_to_path(base_dir=None, debug=False, base_clients=None):
         client = "python-{}client"
         if base_dir is None:
             # use the location from smog_config.yml
-            base_dir = config["rdo_clones"]["base"]
+            base_dir = config.rdo_clones['base']
 
         if not os.path.isdir(base_dir):
             raise Exception("Unable to find base directory to load modules {}".format(base_dir))

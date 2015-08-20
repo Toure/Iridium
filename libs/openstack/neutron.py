@@ -5,7 +5,7 @@ __email__ = "toure@redhat.com, stoner@redhat.com"
 __status__ = "Alpha"
 
 from neutronclient.v2_0.client import Client
-from rhea.core.exceptions import AmbiguityException
+from iridium.core.exceptions import AmbiguityException
 
 
 def create_neutron_client(key_cl=None, creds=None):

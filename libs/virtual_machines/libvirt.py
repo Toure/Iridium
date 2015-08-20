@@ -16,9 +16,9 @@ import xml.etree.ElementTree as ET
 from subprocess import PIPE
 import untangle
 
-from rhea.core.commander import Command, CommandException
-import rhea.core.exceptions as sce
-from rhea.core.logger import glob_logger
+from iridium.core.commander import Command, CommandException
+import iridium.core.exceptions as sce
+from iridium.core.logger import glob_logger
 
 
 def get_connection(hv_ip, user="root", driver="qemu+ssh"):

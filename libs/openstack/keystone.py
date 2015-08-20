@@ -13,7 +13,7 @@ import logging
 
 from keystoneclient import client
 
-from rhea.core.logger import glob_logger
+from iridium.core.logger import glob_logger
 from config import config
 
 logger = logging.getLogger(__name__)

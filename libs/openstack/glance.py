@@ -6,9 +6,9 @@ __status__ = "Alpha"
 
 import os
 
-from rhea.core.exceptions import ArgumentError
-from rhea import add_client_to_path
-from rhea.core.downloader import Downloader
+from iridium.core.exceptions import ArgumentError
+from iridium import add_client_to_path
+from iridium.core.downloader import Downloader
 
 DEBUG = False
 add_client_to_path(debug=DEBUG)

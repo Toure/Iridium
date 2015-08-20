@@ -14,7 +14,7 @@ try:
 except ImportError:
     import Queue as queue
 
-from rhea.core.logger import glob_logger as LOGGER
+from iridium.core.logger import glob_logger as LOGGER
 
 LOG_DIR = "logs"
 if not os.path.exists("logs"):

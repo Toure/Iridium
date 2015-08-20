@@ -7,8 +7,8 @@ import json
 import time
 
 from keystone import get_keystone_init
-from rhea import add_client_to_path
-from rhea.core.logger import glob_logger
+from iridium import add_client_to_path
+from iridium.core.logger import glob_logger
 
 DEBUG = False
 add_client_to_path(debug=DEBUG)
