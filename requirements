@@ -11,6 +11,7 @@ Installation of the following packages / libraries are needed to properly utiliz
 - python-bugzilla
 - lauchpadlib
 - behave
+- untangle
 - python-jenkins
 - gerritlib
 - httplib2  (I’ve run into scenarios where I needed to make my own REST call)

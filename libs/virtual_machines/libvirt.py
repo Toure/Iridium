@@ -14,7 +14,10 @@ import libvirt
 import re
 import xml.etree.ElementTree as ET
 from subprocess import PIPE
-import untangle
+try:
+    import untangle
+except ImportError:
+    print("Module untangle not available.")
 
 from iridium.core.commander import Command, CommandException
 import iridium.core.exceptions as sce

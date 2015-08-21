@@ -18,6 +18,10 @@ else:
 
 
 class Iridium(InteractiveConsole, object):
+    """
+    Iridium is the main class which subclasses from the InteractviceConsole class, this allows us to
+    embed a repl into the project.
+    """
 
     def interact(self, banner=None):
         banner = "Welcome to Iridium"
