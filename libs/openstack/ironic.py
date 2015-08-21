@@ -5,16 +5,48 @@ __email__ = "toure@redhat.com"
 __status__ = "Alpha"
 
 from ironicclient import client
-import keystone
+from libs.openstack import keystone
 
 
-def create_ironic_obj(version, **kwargs):
-    ironic_obj = client.get_client(keystone.create_keystone(version, **kwargs))
-
-    return ironic_obj
+def chassis_create():
+    pass
 
 
-def baremetal_list(version, **kwargs):
-    ironic = create_ironic_obj(version, **kwargs)
+def chassis_delete():
+    pass
 
-    return ironic.list_nodes()
+
+def chassis_list():
+    pass
+
+
+def node_create():
+    pass
+
+
+def node_delete():
+    pass
+
+
+def node_show():
+    pass
+
+
+def node_update():
+    pass
+
+
+def port_create():
+    pass
+
+
+def port_delete():
+    pass
+
+
+def port_list():
+    pass
+
+
+def port_show():
+    pass
