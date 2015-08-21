@@ -28,3 +28,14 @@ python cli.py
 iridium > dir(nova)
 [...'filter_by', 'get_by_id', 'get_by_name', 'get_keystone_init'...]
 ```
+
+## Import Libs
+
+Iridium will also give the users the ability to import functionality which can be used in there own projects to exercise
+OpenStack.
+
+```python
+import libs.openstack
+import libs.infrastructure
+import libs.trackers
+```
