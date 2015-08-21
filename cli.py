@@ -8,6 +8,14 @@ __status__ = "Alpha"
 from code import InteractiveConsole
 from libs.openstack import basestack
 
+try:
+    import readline
+except ImportError:
+    print("Module readline not available.")
+else:
+    import rlcompleter
+    readline.parse_and_bind("tab: complete")
+
 
 class Iridium(InteractiveConsole, object):
 
