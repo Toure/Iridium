@@ -7,14 +7,11 @@ __status__ = "Alpha"
 
 from code import InteractiveConsole
 from libs.openstack import basestack
+from config import config
+import readline
+import atexit
 
-try:
-    import readline
-except ImportError:
-    print("Module readline not available.")
-else:
-    import rlcompleter
-    readline.parse_and_bind("tab: complete")
+readline.parse_and_bind("tab: complete")
 
 
 class Iridium(InteractiveConsole, object):
@@ -28,8 +25,17 @@ class Iridium(InteractiveConsole, object):
         super(Iridium, self).interact(banner)
 
     def raw_input(self, prompt=""):
-        prompt = "iridium > "
+        prompt = "iridium>>> "
         return raw_input(prompt)
+
+
+def save_history():
+    """
+    Saves the session history to specified file in config module.
+    :return: None
+    """
+    readline.write_history_file(config.shell_history['path'])
+
 
 local_modules = locals()
 stack_modules = basestack.Basestack()
@@ -44,3 +50,5 @@ local_modules['neutron'] = stack_modules.import_mod('neutron')
 
 console = Iridium(locals=local_modules)
 console.interact()
+
+atexit.register(save_history)
