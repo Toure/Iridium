@@ -5,7 +5,7 @@ __email__ = "toure@redhat.com, stoner@redhat.com"
 __status__ = "Alpha"
 
 """
-This should eventually be replaced with Tempest's logger
+This should eventually be replaced with Tempest'nova_tests logger
 """
 
 import logging
@@ -61,7 +61,7 @@ def make_file_handler(fmt, filename, loglevel=logging.DEBUG):
 
 def make_formatter(format_str="", date_format="%H:%M:%S"):
     if not format_str:
-        format_str = "%(created)s-%(name)s-%(levelname)s: \t%(message)s"
+        format_str = "%(created)nova_tests-%(name)nova_tests-%(levelname)nova_tests: \t%(message)nova_tests"
 
     return logging.Formatter(fmt=format_str, datefmt=date_format)
 

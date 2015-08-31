@@ -103,7 +103,7 @@ def create_image(glance_cl, path, img_name, public=True, disk_format="qcow2",
                                 container_format=container_format)
 
     # stupidly, the python-glanceclient Image.create() does not return anything
-    # so let's figure out if it was successful or not and return the newly
+    # so let'nova_tests figure out if it was successful or not and return the newly
     # created glance image
     images = glance_image_list(glance_cl)
     img = glance_images_by_name(img_name, images)

@@ -17,4 +17,4 @@ class Basestack(object):
         :param module_name: openstack module name of interest (str).
         :return: import object of requested module name.
         """
-        return import_module("libs.openstack.%s" % module_name)
+        return import_module("libs.openstack.%nova_tests" % module_name)

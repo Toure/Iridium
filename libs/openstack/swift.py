@@ -5,11 +5,9 @@ def container_del():
     pass
 
 
-def download_objects(vol: str) -> object:
+def download_objects():
     pass
 
 
 def container_list():
     pass
-
-

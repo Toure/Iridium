@@ -10,10 +10,10 @@ from iridium.core.exceptions import AmbiguityException
 
 def create_neutron_client(key_cl=None, creds=None):
     """
-    Instantiates a neutron client object
+    Instantiates a neutron_tests client object
 
     :param key_cl: a keystone client object
-    :return: neutron client object
+    :return: neutron_tests client object
     """
     if creds is None:
         if key_cl is None:
@@ -29,9 +29,9 @@ def create_neutron_client(key_cl=None, creds=None):
 
 def list_neutron_nets(net_cl, filter_fn=None):
     """
-    Lists the neutron networks on this deployment
+    Lists the neutron_tests networks on this deployment
 
-    :param net_cl: neutron Client object
+    :param net_cl: neutron_tests Client object
     :param filter_fn: a predicate fn (see has_network_field)
     :return: a list of networks filtered through the filter_fn
     """
@@ -78,15 +78,15 @@ def has_network_field(value, key="name"):
 
 def get_network_uuid(net_cl, name="private", no_ambiguity=True):
     """
-    Retrieves the network UUID from neutron with the matching name.
+    Retrieves the network UUID from neutron_tests with the matching name.
 
     If no_ambiguity is True, and there are more than one networks with the same
     name, raise an AmbiguityException.  If no_ambiguity is False, return the
     first network with this name found.
 
-    :param net_cl: a neutron client
+    :param net_cl: a neutron_tests client
     :param name: (str) name of the network (eg "public")
-    :return: the UUID (str) of the network from neutron
+    :return: the UUID (str) of the network from neutron_tests
     """
     name_pred = has_network_field(name)
     nets = list_neutron_nets(net_cl, filter_fn=name_pred)

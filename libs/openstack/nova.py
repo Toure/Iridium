@@ -6,7 +6,7 @@ import os
 import json
 import time
 
-from keystone import get_keystone_init
+from libs.openstack.keystone import get_keystone_init
 from iridium import add_client_to_path
 from iridium.core.logger import glob_logger
 
@@ -65,7 +65,7 @@ def boot_instance(nc, server_name, server_image, flavor, **kwargs):
     Boots up a compute instance
 
     **Sigh**
-    So, in kilo you now have to specify a neutron network ID
+    So, in kilo you now have to specify a neutron_tests network ID
 
     :param nc: a nova client instance
     :param server_name: string of name to give to compute instance
@@ -138,7 +138,7 @@ def add_sg_rule(nc, parent, proto="tcp", from_port=22, to_port=22, cidr=None,
 
 
 # AFAICT, the rescue operation with the added feature doesn't
-# seem to be in the python-novaclient, so let's make our own function for now
+# seem to be in the python-novaclient, so let'nova_tests make our own function for now
 def rescue_alt_image(ks, server_id, admin_pw=None, rescue_id=None):
     """
     Performs a rescue by replacing the compute instance with an alternate rescue
@@ -347,3 +347,5 @@ def create_flavor(nc, name, ram, num_vcpus, disksize):
     :return:
     """
     return nc.flavors.create(name, ram, num_vcpus, disksize)
+
+

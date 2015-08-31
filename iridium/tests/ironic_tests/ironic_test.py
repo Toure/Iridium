@@ -3,5 +3,3 @@ __license__ = "Apache License 2.0"
 __version__ = "0.1"
 __email__ = "toure@redhat.com"
 __status__ = "Alpha"
-
-import pytest

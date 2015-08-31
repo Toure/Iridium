@@ -28,7 +28,7 @@ def get_connection(hv_ip, user="root", driver="qemu+ssh"):
     """
     Returns a connection ref to the hypervisor
 
-    :param hv_ip: (str) hypervisor's ip address
+    :param hv_ip: (str) hypervisor'nova_tests ip address
     :param user: (str) user to connect as
     :return: libvirt Connection object
     """
@@ -51,7 +51,7 @@ def get_domain(master, vm_name, user="root", driver="qemu+ssh"):
 
 def get_capabilities(conn):
     """
-    Returns a string which is the XML of the hypervisor's capabilities
+    Returns a string which is the XML of the hypervisor'nova_tests capabilities
 
     :param conn: libvirt Connection object
     :return: (str) of capabilities in XML format
@@ -189,7 +189,7 @@ def verify_modprobe(host, proc_type="intel", set=False):
 
 def set_host_passthrough(hyper_ip, dom_name, user="root"):
     """
-    Sets a domain's <cpu> element to use mode host-passthrough
+    Sets a domain'nova_tests <cpu> element to use mode host-passthrough
 
     :param hyper_ip: (str) IP address of host with hypervisor
     :param dom_name: (str) the libvirt domain name
@@ -198,7 +198,7 @@ def set_host_passthrough(hyper_ip, dom_name, user="root"):
     """
     # FIXME: How do we do this just using libvirt?  This adds a dependency
     # on virt-xml
-    # Edit the domain's xml to use host-passthrough mode
+    # Edit the domain'nova_tests xml to use host-passthrough mode
     glob_logger.info("Setting host-passthrough mode for {}".format(dom_name))
     cmd = "virt-xml --connect=qemu+ssh://{}@{}/system {} --edit --cpu " \
           "host-passthrough,clearxml=yes".format(user, hyper_ip, dom_name)
@@ -274,7 +274,7 @@ def test_and_set_distconf(bare_m, cpu):
 
 def turn_on(hv_ip, domain_name, ip_addr, wait=5):
     """
-    Powers on a VM given the hypervisor IP address and VM's domain name
+    Powers on a VM given the hypervisor IP address and VM'nova_tests domain name
 
     :param bare_metal:
     :param domain_name:
@@ -371,7 +371,7 @@ def set_nested_vm_support(bare_m, dom_info, fn=set_host_passthrough, kvm=True,
     test_and_set_distconf(bare_m, cpu)
 
     # We only need to do this if our domain isn't already set for host
-    # passthrough mode.  So let's check it first
+    # passthrough mode.  So let'nova_tests check it first
     root = ET.fromstring(dom_.XMLDesc())
     cpu = list(root.iter("cpu"))[0]
     cpu_mode = fn.__name__ == "set_host_passthrough" or \
