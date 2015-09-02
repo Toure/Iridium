@@ -64,7 +64,6 @@ def boot_instance(nc, server_name, server_image, flavor, **kwargs):
     """
     Boots up a compute instance
 
-    **Sigh**
     So, in kilo you now have to specify a neutron_tests network ID
 
     :param nc: a nova client instance

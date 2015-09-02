@@ -8,10 +8,15 @@ __status__ = "Alpha"
 from code import InteractiveConsole
 from libs.openstack import basestack
 from config import config
-import readline
 import atexit
 
-readline.parse_and_bind("tab: complete")
+try:
+    import readline
+except ImportError:
+    print("readline module not found.")
+else:
+    import rlcompleter
+    readline.parse_and_bind("tab: complete")
 
 
 class Iridium(InteractiveConsole, object):
@@ -25,6 +30,7 @@ class Iridium(InteractiveConsole, object):
         super(Iridium, self).interact(banner)
 
     def raw_input(self, prompt=""):
+        # TODO correct eof issue with custom prompt.
         prompt = "iridium>>> "
         return raw_input(prompt)
 
