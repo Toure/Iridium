@@ -110,15 +110,15 @@ class CinderBase(object):
         :rtype: :class:`Volume`
         """
         self.cinder_cl.create(size, consistencygroup_id=consistencygroup_id, snapshot_id=snapshot_id,
-                       source_volid=source_volid, name=name, description=description, volume_type=volume_type,
-                       user_id=user_id, project_id=project_id, availability_zone=availability_zone, metadata=metadata,
-                       imageRef=imageRef, scheduler_hints=scheduler_hints, source_replica=source_replica,
-                       multiattach=multiattach)
-
+                              source_volid=source_volid, name=name, description=description, volume_type=volume_type,
+                              user_id=user_id, project_id=project_id, availability_zone=availability_zone,
+                              metadata=metadata, imageRef=imageRef, scheduler_hints=scheduler_hints,
+                              source_replica=source_replica, multiattach=multiattach)
 
     def vol_delete(self, volume_id):
         """
-
+        Delete specified volume
+        :param volume_id: id string of volume which is provided from vol_show.
         :return:
         """
         self.cinder_cl.delete(volume_id)
@@ -132,7 +132,6 @@ class CinderBase(object):
         """
         self.cinder_cl.extend(volume, size)
 
-
     def vol_list(self):
         """
 
@@ -141,10 +140,34 @@ class CinderBase(object):
         self.cinder_cl.list()
 
 
-    def vol_rename(self):
-        pass
+    def vol_rename(self, volume, **kwargs):
+        """
+        Volume rename will allow you to change the a list of
+         descriptors against the provided volume.
+        :param volume: name of volume
+        :param kwargs: list of attributes which can be modified.
+        -- valid_update_keys:
+            'name',
+            'description',
+            'display_name',
+            'display_description',
+            'metadata'
+        :return: volume detailed info.
+        """
+        self.cinder_cl.update(volume, kwargs)
 
-    def snapshot_create(self):
+    def vol_show(self, volume_id):
+        """
+        Show detailed information about given volume.
+        :param volume_id: id string of volume.
+        :return: data about given volume.
+        """
+        self.cinder_cl.show(volume_id)
+
+    def vol_get
+
+    def snapshot_create(self, ):
+
         pass
 
     def snapeshot_delete(self):
