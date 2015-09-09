@@ -139,7 +139,6 @@ class CinderBase(object):
         """
         self.cinder_cl.list()
 
-
     def vol_rename(self, volume, **kwargs):
         """
         Volume rename will allow you to change the a list of
@@ -164,7 +163,23 @@ class CinderBase(object):
         """
         self.cinder_cl.show(volume_id)
 
-    def vol_get
+    def vol_attach(self, instance_uuid, mountpoint, mode='rw', host_name=None):
+        """
+
+        :param instance_uuid:
+        :param mountpoint:
+        :param mode:
+        :param host_name:
+        :return:
+        """
+        self.cinder_cl.attach(instance_uuid=instance_uuid, mountpoint=mountpoint, mode=mode, host_name=host_name)
+
+    def vol_detach(self):
+        """
+
+        :return:
+        """
+        return self.cinder_cl.detach()
 
     def snapshot_create(self, ):
 
