@@ -9,15 +9,10 @@ Keystone module which will be responsible for authentication and base keystone c
 """
 
 import os
-import logging
-
 from keystoneclient import client
 
 from iridium.core.logger import glob_logger
 from config import config
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
 
 
 def get_keystone_init(version=None, **kwargs):
@@ -58,7 +53,7 @@ def get_keystone_init(version=None, **kwargs):
     return creds
 
 
-def create_keystone(version, **kwargs):
+def create_keystone(version=None, **kwargs):
     """Creates the keystone object
 
     :param version of protocol to communicate with Keystone over, the two options are

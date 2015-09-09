@@ -42,7 +42,7 @@ def delete_server(nova_cl, compute_instance):
     return not res
 
 
-def create_nova_client(key_cl, creds=None):
+def create_nova_client(version, key_cl, creds=None):
     """
     Instantiates a nova client object
     :param key_cl: a keystone client object
@@ -56,7 +56,7 @@ def create_nova_client(key_cl, creds=None):
 
     nvcreds = [creds[key]
                for key in ["username", "password", "tenant_name", "auth_url"]]
-    nova = nvclient.Client(*nvcreds)
+    nova = nvclient.Client(version, *nvcreds)
     return nova
 
 

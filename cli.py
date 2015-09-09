@@ -1,12 +1,13 @@
+#!/bin/env python
 __author__ = "Toure Dunnon"
 __license__ = "Apache License 2.0"
 __version__ = "0.1"
 __email__ = "toure@redhat.com"
 __status__ = "Alpha"
 
-
 from code import InteractiveConsole
 from libs.openstack import basestack
+from iridium.core import logger
 from config import config
 import atexit
 
@@ -40,7 +41,11 @@ def save_history():
     Saves the session history to specified file in config module.
     :return: None
     """
-    readline.write_history_file(config.shell_history['path'])
+    # TODO figure out why this is not appending log details.
+    c_logger = logger.get_simple_logger(__name__, "iridium_cli")
+    c_logger.info("Saving History...")
+    log_path = config.logging['log_dir'] + logger.make_timestamped_filename("iridium_cli")
+    readline.write_history_file(log_path)
 
 
 local_modules = locals()

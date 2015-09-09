@@ -12,6 +12,7 @@ import logging
 import time
 import sys
 import os
+from config import config
 
 
 def make_timestamp():
@@ -41,12 +42,11 @@ def make_logger(loggername, handlers=(), loglevel=logging.DEBUG):
     return logr
 
 
-def make_stream_handler(fmt, stream=sys.stdout, loglevel=logging.INFO):
+def make_stream_handler(fmt, loglevel=logging.INFO):
     # Handle a stupid 2.6 to 2.7 rename
-    strm_handler = logging.StreamHandler(stream=stream)
-
-    strm_handler.setFormatter(fmt)
+    strm_handler = logging.StreamHandler()
     strm_handler.setLevel(loglevel)
+    strm_handler.setFormatter(fmt)
     return strm_handler
 
 
@@ -59,11 +59,11 @@ def make_file_handler(fmt, filename, loglevel=logging.DEBUG):
     return file_handler
 
 
-def make_formatter(format_str="", date_format="%H:%M:%S"):
+def make_formatter(format_str=""):
     if not format_str:
-        format_str = "%(created)nova_tests-%(name)nova_tests-%(levelname)nova_tests: \t%(message)nova_tests"
+        format_str = '%(asctime)s :: %(name)-12s : %(levelname)-8s : %(message)s'
 
-    return logging.Formatter(fmt=format_str, datefmt=date_format)
+    return logging.Formatter(format_str)
 
 
 def get_simple_logger(logname, filename, loglvl=logging.DEBUG):
@@ -90,18 +90,9 @@ def get_simple_logger(logname, filename, loglvl=logging.DEBUG):
     return logr
 
 
-def banner(logger, msgs, loglevel=logging.INFO,  highlight="=", length=20):
-    logger.log(loglevel, highlight * length)
-    for msg in msgs:
-        logger.log(loglevel, msg)
-    logger.log(loglevel, highlight * length)
-
-
-# Get our logging config directory
-from config import config
 log_dir = config.logging["log_dir"]
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)
 log_name = os.path.join(log_dir, "iridium")
 
-glob_logger = get_simple_logger(__name__, log_dir)
+glob_logger = get_simple_logger(__name__, log_name)

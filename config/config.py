@@ -34,13 +34,9 @@ hostnodes = dict(
 )
 
 logging = dict(
-    log_dir='/tmp/iridium'
+    log_dir='/tmp/iridium_logs/'
 )
 
 rdo_clones = dict(
     base='/path/to/project/clone'
-)
-
-shell_history = dict(
-    path='/tmp/iridium_history'
 )
