@@ -42,7 +42,7 @@ def save_history():
     :return: None
     """
     # TODO figure out why this is not appending log details.
-    c_logger = logger.get_simple_logger(__name__, "iridium_cli")
+    c_logger = logger.get_simple_logger("iridium cli", "iridium_cli")
     c_logger.info("Saving History...")
     log_path = config.logging['log_dir'] + logger.make_timestamped_filename("iridium_cli")
     readline.write_history_file(log_path)
@@ -50,14 +50,14 @@ def save_history():
 
 local_modules = locals()
 stack_modules = basestack.Basestack()
-local_modules['nova'] = stack_modules.import_mod('nova')
-local_modules['keystone'] = stack_modules.import_mod('keystone')
-local_modules['ironic'] = stack_modules.import_mod('ironic')
-local_modules['heat'] = stack_modules.import_mod('heat')
-local_modules['swift'] = stack_modules.import_mod('swift')
-local_modules['glance'] = stack_modules.import_mod('glance')
-local_modules['cinder'] = stack_modules.import_mod('cinder')
-local_modules['neutron'] = stack_modules.import_mod('neutron')
+local_modules['nova_mod'] = stack_modules.import_mod('nova')
+local_modules['keystone_mod'] = stack_modules.import_mod('keystone')
+local_modules['ironic_mod'] = stack_modules.import_mod('ironic')
+local_modules['heat_mod'] = stack_modules.import_mod('heat')
+local_modules['swift_mod'] = stack_modules.import_mod('swift')
+local_modules['glance_mod'] = stack_modules.import_mod('glance')
+local_modules['cinder_mod'] = stack_modules.import_mod('cinder')
+local_modules['neutron_mod'] = stack_modules.import_mod('neutron')
 
 console = Iridium(locals=local_modules)
 console.interact()

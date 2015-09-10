@@ -15,16 +15,16 @@ class CinderBase(object):
     """
     def __init__(self, version, **kwargs):
         """
-
         :return: cinder auth object.
         """
-        cinder_auth = keystone.get_keystone_init(**kwargs)
-        self.cinder_cl = client.Client(version, cinder_auth)
+        ks_kwargs = keystone.get_keystone_init(**kwargs)
+        cinder_auth = [ks_kwargs[key] for key in ["username", "password", "tenant_name", "auth_url"]]
+        self.cinder_cl = client.Client(version, *cinder_auth)
 
     def list_zone(self):
         """
 
-        :param cinder_cl:
+        :param cinder_cl: cinder client authentication object.
         :return:
         """
         return self.cinder_cl.availability_zones.list()
@@ -42,7 +42,7 @@ class CinderBase(object):
         :param force: If True, allows an in-use volume to be backed up.
         :rtype: :class:`VolumeBackup`
         """
-        return self.cinder_cl.create(volume_id, container=container, name=name,
+        return self.cinder_cl.volume_backups.create(volume_id, container=container, name=name,
                                      description=description, incremental=incremental, force=force)
 
     def backup_delete(self, volume):
@@ -52,7 +52,7 @@ class CinderBase(object):
         :param volume:
         :return:
         """
-        self.cinder_cl.delete(volume)
+        self.cinder_cl.volume_backups.delete(volume)
 
     def backup_list(self, detailed=True, search_opts=None):
         """
@@ -62,7 +62,15 @@ class CinderBase(object):
         :param search_opts:
         :return: list of volumes.
         """
-        return self.cinder_cl.list(detailed=detailed, search_opts=search_opts)
+        return self.cinder_cl.volume_backups.list(detailed=detailed, search_opts=search_opts)
+
+    def backup_show(self, backup_id):
+        """
+        Show volume backup details.
+        :param backup_id: ID of backup.
+        :return:
+        """
+        self.cinder_cl.volume_backups.get(backup_id)
 
     def backup_export(self, backup_id):
         """
@@ -71,7 +79,7 @@ class CinderBase(object):
         :param backup_id:
         :return:
         """
-        return self.cinder_cl.export_record(backup_id)
+        return self.cinder_cl.volume_backups.export_record(backup_id)
 
     def backup_import(self, backup_service, backup_url):
         """
@@ -81,7 +89,7 @@ class CinderBase(object):
         :param backup_url:
         :return:
         """
-        self.cinder_cl.import_record(backup_service, backup_url)
+        self.cinder_cl.volume_backups.import_record(backup_service, backup_url)
 
     def vol_create(self, size, consistencygroup_id=None, snapshot_id=None, source_volid=None,
                    name=None, description=None, volume_type=None, user_id=None, project_id=None,
@@ -109,7 +117,7 @@ class CinderBase(object):
                             one instance
         :rtype: :class:`Volume`
         """
-        self.cinder_cl.create(size, consistencygroup_id=consistencygroup_id, snapshot_id=snapshot_id,
+        self.cinder_cl.volumes.create(size, consistencygroup_id=consistencygroup_id, snapshot_id=snapshot_id,
                               source_volid=source_volid, name=name, description=description, volume_type=volume_type,
                               user_id=user_id, project_id=project_id, availability_zone=availability_zone,
                               metadata=metadata, imageRef=imageRef, scheduler_hints=scheduler_hints,
@@ -121,7 +129,7 @@ class CinderBase(object):
         :param volume_id: id string of volume which is provided from vol_show.
         :return:
         """
-        self.cinder_cl.delete(volume_id)
+        self.cinder_cl.volumes.delete(volume_id)
 
     def vol_extend(self, volume, size):
         """
@@ -130,14 +138,17 @@ class CinderBase(object):
         :param size:
         :return:
         """
-        self.cinder_cl.extend(volume, size)
+        self.cinder_cl.volumes.extend(volume, size)
 
     def vol_list(self):
         """
-
-        :return:
+        List all available volumes.
+        :return: list of volumes.
         """
-        self.cinder_cl.list()
+        if len(self.cinder_cl.volumes.list()) == 0:
+            print("No volume found.")
+        else:
+            return self.cinder_cl.volumes.list()
 
     def vol_rename(self, volume, **kwargs):
         """
@@ -153,7 +164,7 @@ class CinderBase(object):
             'metadata'
         :return: volume detailed info.
         """
-        self.cinder_cl.update(volume, kwargs)
+        self.cinder_cl.volumes.update(volume, kwargs)
 
     def vol_show(self, volume_id):
         """
@@ -161,7 +172,7 @@ class CinderBase(object):
         :param volume_id: id string of volume.
         :return: data about given volume.
         """
-        self.cinder_cl.show(volume_id)
+        self.cinder_cl.volumes.show(volume_id)
 
     def vol_attach(self, instance_uuid, mountpoint, mode='rw', host_name=None):
         """
@@ -172,14 +183,14 @@ class CinderBase(object):
         :param host_name:
         :return:
         """
-        self.cinder_cl.attach(instance_uuid=instance_uuid, mountpoint=mountpoint, mode=mode, host_name=host_name)
+        self.cinder_cl.volumes.attach(instance_uuid=instance_uuid, mountpoint=mountpoint, mode=mode, host_name=host_name)
 
     def vol_detach(self):
         """
 
         :return:
         """
-        return self.cinder_cl.detach()
+        return self.cinder_cl.volumes.detach()
 
     def snapshot_create(self, ):
 

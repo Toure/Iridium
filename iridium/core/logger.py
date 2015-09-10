@@ -4,13 +4,8 @@ __version__ = "0.1"
 __email__ = "toure@redhat.com, stoner@redhat.com"
 __status__ = "Alpha"
 
-"""
-This should eventually be replaced with Tempest'nova_tests logger
-"""
-
 import logging
 import time
-import sys
 import os
 from config import config
 
