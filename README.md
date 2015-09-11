@@ -40,3 +40,7 @@ import libs.openstack
 import libs.infrastructure
 import libs.trackers
 ```
+
+## Contributing
+
+Thanks to Sean Toner and his initial project [SMOG](https://github.com/rarebreed/smog)
