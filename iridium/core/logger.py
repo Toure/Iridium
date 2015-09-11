@@ -28,6 +28,13 @@ def make_timestamped_filename(prefix, postfix=".log"):
 
 
 def make_logger(loggername, handlers=(), loglevel=logging.DEBUG):
+    """
+
+    :param loggername:
+    :param handlers:
+    :param loglevel:
+    :return:
+    """
     logr = logging.getLogger(loggername)
     logr.setLevel(loglevel)
 
@@ -38,7 +45,12 @@ def make_logger(loggername, handlers=(), loglevel=logging.DEBUG):
 
 
 def make_stream_handler(fmt, loglevel=logging.INFO):
-    # Handle a stupid 2.6 to 2.7 rename
+    """
+
+    :param fmt:
+    :param loglevel:
+    :return:
+    """
     strm_handler = logging.StreamHandler()
     strm_handler.setLevel(loglevel)
     strm_handler.setFormatter(fmt)
@@ -47,6 +59,11 @@ def make_stream_handler(fmt, loglevel=logging.INFO):
 
 def make_file_handler(fmt, filename, loglevel=logging.DEBUG):
     """
+
+    :param fmt:
+    :param filename:
+    :param loglevel:
+    :return:
     """
     file_handler = logging.FileHandler(filename)
     file_handler.setFormatter(fmt)
@@ -55,6 +72,11 @@ def make_file_handler(fmt, filename, loglevel=logging.DEBUG):
 
 
 def make_formatter(format_str=""):
+    """
+
+    :param format_str:
+    :return:
+    """
     if not format_str:
         format_str = '%(asctime)s :: %(name)-12s : %(levelname)-8s : %(message)s'
 
@@ -85,9 +107,21 @@ def get_simple_logger(logname, filename, loglvl=logging.DEBUG):
     return logr
 
 
-log_dir = config.logging["log_dir"]
-if not os.path.exists(log_dir):
-    os.makedirs(log_dir)
-log_name = os.path.join(log_dir, "iridium")
+def _glob_logger(log_dir=None):
+    """
 
-glob_logger = get_simple_logger(__name__, log_name)
+    :param log_dir:
+    :return:
+    """
+    if log_dir is None:
+        log_dir = config.logging["log_dir"]
+
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+
+    log_name = os.path.join(log_dir, "iridium")
+    return log_name
+
+
+glob_logger = get_simple_logger(__name__, _glob_logger())
+

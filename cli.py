@@ -7,7 +7,8 @@ __status__ = "Alpha"
 
 from code import InteractiveConsole
 from libs.openstack import basestack
-from iridium.core import logger
+from iridium.core.logger import glob_logger
+from iridium.core.logger import make_timestamped_filename
 from config import config
 import atexit
 
@@ -42,9 +43,8 @@ def save_history():
     :return: None
     """
     # TODO figure out why this is not appending log details.
-    c_logger = logger.get_simple_logger("iridium cli", "iridium_cli")
-    c_logger.info("Saving History...")
-    log_path = config.logging['log_dir'] + logger.make_timestamped_filename("iridium_cli")
+    glob_logger.info("Saving History...")
+    log_path = config.logging['log_dir'] + make_timestamped_filename('iridium_cli_history')
     readline.write_history_file(log_path)
 
 
