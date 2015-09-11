@@ -32,7 +32,7 @@ iridium >>> dir(nova)
 
 ## Import Libs
 
-Iridium will also give the users the ability to import functionality which can be used in there own projects to exercise
+Iridium will also give the users the ability to import functionality which can be used in their own projects to exercise
 OpenStack.
 
 ```python
