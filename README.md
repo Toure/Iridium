@@ -20,12 +20,13 @@ is possible with OpenStack.
 
 ## Interactive Shell
 
-Iridium REPL will allow you to attach to an existing OpenStack deploy and quickly start crafting test routines to
+Iridium REPL will allow you to attach to an existing OpenStack deployment and quickly start crafting test routines to
 exercise the related OpenStack function.
 
 ```bash
 sh> python cli.py
-iridium > dir(nova)
+iridium >>> nova = nova_mod.NovaBase()
+iridium >>> dir(nova)
 [...'filter_by', 'get_by_id', 'get_by_name', 'get_keystone_init'...]
 ```
 
