@@ -1,10 +1,7 @@
 __author__ = 'toure'
 
-import bugzilla
-from tracker import Traker
 
-
-class Bugz(Traker):
+class Launchz(object):
     def create_case(self):
         pass
 

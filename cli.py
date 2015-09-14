@@ -7,6 +7,7 @@ __status__ = "Alpha"
 
 from code import InteractiveConsole
 from libs.openstack import basestack
+from libs.trackers import tracker
 from iridium.core.logger import glob_logger
 from iridium.core.logger import make_timestamped_filename
 from config import config
@@ -50,6 +51,7 @@ def save_history():
 
 local_modules = locals()
 stack_modules = basestack.Basestack()
+tracker_module = tracker.TrackerBase()
 local_modules['nova_mod'] = stack_modules.import_mod('nova')
 local_modules['keystone_mod'] = stack_modules.import_mod('keystone')
 local_modules['ironic_mod'] = stack_modules.import_mod('ironic')
@@ -58,6 +60,7 @@ local_modules['swift_mod'] = stack_modules.import_mod('swift')
 local_modules['glance_mod'] = stack_modules.import_mod('glance')
 local_modules['cinder_mod'] = stack_modules.import_mod('cinder')
 local_modules['neutron_mod'] = stack_modules.import_mod('neutron')
+local_modules['tracker_mod'] = tracker_module.import_mod()
 
 console = Iridium(locals=local_modules)
 console.interact()

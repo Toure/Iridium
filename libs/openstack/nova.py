@@ -13,10 +13,7 @@ from novaclient.exceptions import NotFound
 
 class NovaBase(object):
     def __init__(self, version, **kwargs):
-        """
-        :return: returns the credentials needed to create a nova client
-        """
-        creds = keystone.get_keystone_init(**kwargs)
+        creds = keystone.keystone_retrieve(version='v2')
         nova_cred_list = [creds[key] for key in ["username", "password", "tenant_name", "auth_url"]]
         self.nova_cl = nvclient.Client(version, *nova_cred_list)
         self.ks = keystone.create_keystone()
@@ -28,10 +25,10 @@ class NovaBase(object):
         :param compute_instance: A nova.server instance
         :return: false if is instance was deleted, true otherwise
         """
-        id = compute_instance.id
+        ident = compute_instance.id
         compute_instance.delete()
 
-        res = any(itertools.dropwhile(lambda x: x.id != id, self.nova_cl.servers.list()))
+        res = any(itertools.dropwhile(lambda x: x.id != ident, self.nova_cl.servers.list()))
         return not res
 
     def boot_instance(self, server_name, server_image, flavor, **kwargs):
@@ -103,7 +100,6 @@ class NovaBase(object):
         res = sg.create(parent, ip_protocol=proto, cidr=cidr, from_port=from_port,
                         to_port=to_port, group_id=group_id)
         return res
-
 
     # AFAICT, the rescue operation with the added feature doesn't
     # seem to be in the python-novaclient, so let'nova_tests make our own function for now
@@ -184,7 +180,6 @@ class NovaBase(object):
         fnc = partial(filter_by_name, "numa")
         servers = list_instances(nova, fnc)
 
-        :param nc:
         :param fn:
         :return:
         """
@@ -301,12 +296,3 @@ class NovaBase(object):
         :return:
         """
         return self.nova_cl.flavors.create(name, ram, num_vcpus, disksize)
-
-    def create_images(self, server, image_name, metadata=None):
-        """
-
-        :param server:
-        :param image_name:
-        :param metadata:
-        :return:
-        """

@@ -6,6 +6,7 @@ __status__ = "Alpha"
 
 import pytest
 from libs.openstack import nova
+from libs.openstack import glance
 from iridium.core.logger import glob_logger
 from iridium.core.exceptions import AmbiguityException
 
@@ -16,7 +17,9 @@ def test_instance_creation():
     for nodes in range(10):
         glob_logger.info("Creating node: %s" % nodes)
         try:
-            nova_cl.boot_instance()
+            server_name = "test_server_%s" % nodes
+            server_image = glance.glance_images_by_name()
+            nova_cl.boot_instance(server_name, )
         except AmbiguityException:
             print("Not sure the status of new instances.")
 
