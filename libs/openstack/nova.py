@@ -302,4 +302,11 @@ class NovaBase(object):
         """
         return self.nova_cl.flavors.create(name, ram, num_vcpus, disksize)
 
+    def create_images(self, server, image_name, metadata=None):
+        """
 
+        :param server:
+        :param image_name:
+        :param metadata:
+        :return:
+        """
