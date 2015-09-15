@@ -5,48 +5,47 @@ __email__ = "toure@redhat.com"
 __status__ = "Alpha"
 
 from ironicclient import client
+from ironicclient.v1 import chassis
+from ironicclient.v1 import node
+from ironicclient.v1 import port
 from libs.openstack import keystone
 
 
-def chassis_create():
-    pass
+class IronicBase(object):
+    def __init__(self):
+        self.chassis = chassis.ChassisManager
+        self.node = node.NodeManager
+        self.port = port.PortManager
 
+    def chassis_create(self, **kwargs):
+        self.chassis.create(**kwargs)
 
-def chassis_delete():
-    pass
+    def chassis_delete(self, chassis_id):
+        self.chassis.delete(chassis_id)
 
+    def chassis_list(self):
+        self.chassis.list()
 
-def chassis_list():
-    pass
+    def node_create(self, **kwargs):
+        self.node.create(**kwargs)
 
+    def node_delete(self, node_id):
+        self.node.delete(node_id=node_id)
 
-def node_create():
-    pass
+    def node_list(self):
+        self.node.list()
 
+    def node_update(self, node_id, patch):
+        self.node.update(node_id=node_id, patch=patch)
 
-def node_delete():
-    pass
+    def port_create(self, **kwargs):
+        self.port.create(**kwargs)
 
+    def port_delete(self, port_id):
+        self.port.delete(port_id=port_id)
 
-def node_show():
-    pass
+    def port_list(self):
+        self.port.list()
 
-
-def node_update():
-    pass
-
-
-def port_create():
-    pass
-
-
-def port_delete():
-    pass
-
-
-def port_list():
-    pass
-
-
-def port_show():
-    pass
+    def port_show(self):
+        self.port.list(detail=True)

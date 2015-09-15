@@ -10,6 +10,7 @@ Keystone module which will be responsible for authentication and base keystone c
 
 import os
 from keystoneclient import client
+from keystoneclient.v3 import projects
 from iridium.core.logger import glob_logger
 from config import config
 
@@ -69,7 +70,7 @@ def create_keystone(version='v2', **kwargs):
        project_domain_name domain for specified project onnly valid for version 3.
 
     """
-    creds = self.keystone_retrieve(version, **kwargs)
+    creds = keystone_retrieve(version, **kwargs)
 
     # TODO additional checks for valid object creation.
 
@@ -78,16 +79,20 @@ def create_keystone(version='v2', **kwargs):
     return keystone
 
 
-def get_endpoint(self, name, end_type="publicURL"):
-    return self.create_keystone().service_catalog.url_for(service_type=name,
-                                                          endpoint_type=end_type)
+def get_endpoint(name, end_type="publicURL"):
+    return create_keystone().service_catalog.url_for(service_type=name,
+                                                     endpoint_type=end_type)
 
 
-def create_tenant(self, name, **kwargs):
-    tenant = self.create_keystone().tenants.create(name, **kwargs)
+def create_tenant(name, **kwargs):
+    tenant = create_keystone().tenants.create(name, **kwargs)
     return tenant
 
 
-def create_user(self, tenant_id, name, **kwargs):
-    user = self.create_keystone().users.create(name, tenant_id=tenant_id, **kwargs)
+def create_user(tenant_id, name, **kwargs):
+    user = create_keystone().users.create(name, tenant_id=tenant_id, **kwargs)
     return user
+
+
+def create_project(name, **kwargs):
+    pass
