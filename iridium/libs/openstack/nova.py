@@ -20,6 +20,11 @@ class NovaBase(object):
         self.nova_cl = nvclient.Client(version, *nova_cred_list)
         self.ks = keystone.create_keystone()
 
+# class NovaCMD(NovaBase):
+
+#    def __init__(self):
+#        super(NovaBase, self).__init__()
+
     def delete_server(self, compute_instance):
         """
         Stops a compute instance
@@ -286,6 +291,13 @@ class NovaBase(object):
         policies = policies.split(",")
         body = {"name": name, "policies": policies}
         return self.nova_cl.server_groups.create(**body)
+
+    def server_group_list(self):
+        """
+
+        :return: list of groups.
+        """
+        return self.nova_cl.server_groups.list()
 
     def create_flavor(self, name, ram, num_vcpus, disksize):
         """

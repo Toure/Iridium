@@ -4,6 +4,7 @@ __version__ = "0.1"
 __email__ = "toure@redhat.com"
 __status__ = "Alpha"
 
+import pytest
 
 def test_authentication():
     pass
