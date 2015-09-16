@@ -6,12 +6,13 @@ __email__ = "toure@redhat.com"
 __status__ = "Alpha"
 
 from code import InteractiveConsole
-from libs.openstack import basestack
-from libs.trackers import tracker
+import atexit
+
+from iridium.libs.openstack import basestack
+from iridium.libs.trackers import tracker
 from iridium.core.logger import glob_logger
 from iridium.core.logger import make_timestamped_filename
-from config import config
-import atexit
+from iridium.config import config
 
 try:
     import readline
@@ -60,7 +61,9 @@ local_modules['swift_mod'] = stack_modules.import_mod('swift')
 local_modules['glance_mod'] = stack_modules.import_mod('glance')
 local_modules['cinder_mod'] = stack_modules.import_mod('cinder')
 local_modules['neutron_mod'] = stack_modules.import_mod('neutron')
-local_modules['tracker_mod'] = tracker_module.import_mod()
+# TODO possibly another way to determine tracker platform.
+local_modules['tracker_mod'] = tracker_module.import_mod(config.bug_tracker['tracker'])
+
 
 console = Iridium(locals=local_modules)
 console.interact()

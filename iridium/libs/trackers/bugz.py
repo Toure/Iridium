@@ -56,4 +56,4 @@ class Bugz(object):
         :param kwargs:
         :return: Returns the ID of the attachment.
         """
-        Bugzilla.attachfile(idlist, attachfile=attachment, description, **kwargs)
+        Bugzilla.attachfile(idlist, attachfile=attachment, description=description, **kwargs)

@@ -4,11 +4,9 @@ __version__ = "0.1"
 __email__ = "toure@redhat.com"
 __status__ = "Alpha"
 
-from ironicclient import client
 from ironicclient.v1 import chassis
 from ironicclient.v1 import node
 from ironicclient.v1 import port
-from libs.openstack import keystone
 
 
 class IronicBase(object):

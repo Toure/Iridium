@@ -5,7 +5,8 @@ __email__ = "toure@redhat.com"
 __status__ = "Alpha"
 
 from cinderclient import client
-from libs.openstack import keystone
+
+from iridium.libs.openstack import keystone
 
 
 class CinderBase(object):

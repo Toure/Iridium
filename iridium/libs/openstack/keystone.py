@@ -9,10 +9,11 @@ Keystone module which will be responsible for authentication and base keystone c
 """
 
 import os
+
 from keystoneclient import client
-from keystoneclient.v3 import projects
+
 from iridium.core.logger import glob_logger
-from config import config
+from iridium.config import config
 
 
 def keystone_retrieve(version='v2', read_export=False, **kwargs):

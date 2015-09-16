@@ -1,8 +1,9 @@
 import os
 import importlib
 import sys
+
 from iridium import core
-from config import config
+from iridium.config import config
 
 
 def add_client_to_path(base_dir=None, debug=False, base_clients=None):

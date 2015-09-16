@@ -40,3 +40,7 @@ logging = dict(
 rdo_clones = dict(
     base='/path/to/project/clone'
 )
+
+bug_tracker = dict(
+    tracker='bugz'
+)

@@ -7,7 +7,8 @@ __status__ = "Alpha"
 import logging
 import time
 import os
-from config import config
+
+from iridium.config import config
 
 
 def make_timestamp():

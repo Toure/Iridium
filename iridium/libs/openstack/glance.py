@@ -14,7 +14,7 @@ DEBUG = False
 add_client_to_path(debug=DEBUG)
 
 from glanceclient import Client as GlanceFactory
-from libs.openstack import keystone
+from iridium.libs.openstack import keystone
 
 
 class GlanceError(Exception):

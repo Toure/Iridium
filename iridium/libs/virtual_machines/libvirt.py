@@ -10,10 +10,12 @@ getting system information from a host
 """
 
 import time
-import libvirt
 import re
 import xml.etree.ElementTree as ET
 from subprocess import PIPE
+
+import libvirt
+
 try:
     import untangle
 except ImportError:

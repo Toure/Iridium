@@ -7,14 +7,14 @@ __status__ = "Alpha"
 from importlib import import_module
 
 
-class Basestack(object):
-
+class TrackerBase(object):
     @staticmethod
-    def import_mod(module_name):
+    def import_mod(platform_name):
         """
         Import mod will return an initialized import path from the specified module name.
 
-        :param module_name: openstack module name of interest (str).
+        :param module_name: tracker module name of interest (str).
         :return: import object of requested module name.
         """
-        return import_module("libs.openstack.%s" % module_name)
+        return import_module("iridium.libs.trackers.%s" % platform_name)
+

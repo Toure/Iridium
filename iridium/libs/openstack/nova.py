@@ -1,14 +1,16 @@
 __author__ = 'toure'
 
 import itertools
-import httplib2
 import os
 import json
 import time
-from libs.openstack import keystone
-from iridium.core.logger import glob_logger
+
+import httplib2
 import novaclient.client as nvclient
 from novaclient.exceptions import NotFound
+
+from iridium.libs.openstack import keystone
+from iridium.core.logger import glob_logger
 
 
 class NovaBase(object):
