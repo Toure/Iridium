@@ -21,12 +21,12 @@ def read(fname):
 setup(
     name="Iridium",
     version="0.1",
-    author ="Toure Dunnon",
-    author_email = "toure@redhat.com",
-    description = ("Openstack functional test framework."),
-    license = "Apache License 2",
-    keywords = "openstack test framework",
-    url = "http://toure.github.io/Iridium/",
+    author="Toure Dunnon",
+    author_email="toure@redhat.com",
+    description="OpenStack functional test framework.",
+    license="Apache License 2",
+    keywords="openstack test framework",
+    url="http://toure.github.io/Iridium/",
     packages=['iridium', 'stack_tests'],
     long_description=read('README'),
     classifiers=[
