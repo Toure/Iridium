@@ -10,9 +10,10 @@ import os
 
 def read(fname):
     """
-
-    :param fname:
-    :return:
+    Read function is used to provide a simple way to inject a more lengthy description without
+    cluttering the setup.py file.
+    :param fname: file name which will be used to provide the long_description.
+    :return: file dump of provided file.
     """
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
