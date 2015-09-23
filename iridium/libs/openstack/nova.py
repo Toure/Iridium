@@ -19,11 +19,6 @@ class NovaBase(object):
         nova_cred_list = [creds[key] for key in ["username", "password", "tenant_name", "auth_url"]]
         self.nova_session = nvclient.Client(version, *nova_cred_list)
 
-    # class NovaCMD(NovaBase):
-
-    #    def __init__(self):
-    #        super(NovaBase, self).__init__()
-
     def delete_server(self, compute_instance):
         """
 
