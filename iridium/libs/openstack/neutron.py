@@ -6,36 +6,24 @@ __status__ = "Alpha"
 
 from neutronclient.v2_0.client import Client
 from iridium.core.exceptions import AmbiguityException
+from iridium.libs.openstack import keystone
 
 
-def create_neutron_client(key_cl=None, creds=None):
-    """
-    Instantiates a neutron_tests client object
-
-    :param key_cl: a keystone client object
-    :return: neutron_tests client object
-    """
-    if creds is None:
-        if key_cl is None:
-            raise Exception("Must supply key_cl or creds")
-
-        creds = {"username": key_cl.username,
-                 "tenant_name": key_cl.tenant_name,
-                 "password": key_cl.password,
-                 "auth_url": key_cl.auth_url}
-
-    return Client(**creds)
+class NeutronBase(object):
+    def __init__(self):
+        creds = keystone.keystone_retrieve()
+        self.neutron_session = Client(**creds)
 
 
-def list_neutron_nets(net_cl, filter_fn=None):
+def list_neutron_nets(neutron_session, filter_fn=None):
     """
     Lists the neutron_tests networks on this deployment
 
-    :param net_cl: neutron_tests Client object
+    :param neutron_session: neutron_tests Client object
     :param filter_fn: a predicate fn (see has_network_field)
     :return: a list of networks filtered through the filter_fn
     """
-    nets = net_cl.list_networks()["networks"]
+    nets = neutron_session.list_networks()["networks"]
     if filter_fn:
         nets = list(filter(filter_fn, nets))
     return nets
@@ -48,7 +36,7 @@ def has_network_field(value, key="name"):
     Usage::
 
       active_pred = has_network_field("ACTIVE", key="status")
-      nets = list_neutron_nets(net_cl, filter_fn=active_pred)
+      nets = list_neutron_nets(neutron_session, filter_fn=active_pred)
 
     :param value: The value (of key) to match against
     :param key: the key in the network object to look up
@@ -76,7 +64,7 @@ def has_network_field(value, key="name"):
     return find
 
 
-def get_network_uuid(net_cl, name="private", no_ambiguity=True):
+def get_network_uuid(neutron_session, name="private", no_ambiguity=True):
     """
     Retrieves the network UUID from neutron_tests with the matching name.
 
@@ -84,12 +72,12 @@ def get_network_uuid(net_cl, name="private", no_ambiguity=True):
     name, raise an AmbiguityException.  If no_ambiguity is False, return the
     first network with this name found.
 
-    :param net_cl: a neutron_tests client
+    :param neutron_session: a neutron_tests client
     :param name: (str) name of the network (eg "public")
     :return: the UUID (str) of the network from neutron_tests
     """
     name_pred = has_network_field(name)
-    nets = list_neutron_nets(net_cl, filter_fn=name_pred)
+    nets = list_neutron_nets(neutron_session, filter_fn=name_pred)
 
     if len(nets) > 1 and no_ambiguity:
         err = "Found more than one net: ".format(nets)

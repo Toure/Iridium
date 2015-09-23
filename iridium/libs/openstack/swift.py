@@ -1,13 +1,9 @@
 __author__ = 'toure'
 
 
-def container_del():
-    pass
+from swiftclient import client
+from iridium.libs.openstack import keystone
 
-
-def download_objects():
-    pass
-
-
-def container_list():
-    pass
+class SwiftBase(object):
+    def __init__(self):
+        creds = keystone.keystone_retrieve()

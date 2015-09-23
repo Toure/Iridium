@@ -10,7 +10,7 @@ Keystone module which will be responsible for authentication and base keystone c
 
 import os
 
-from keystoneclient import client
+from keystoneclient.v2_0 import client
 
 from iridium.core.logger import glob_logger
 from iridium.config import config

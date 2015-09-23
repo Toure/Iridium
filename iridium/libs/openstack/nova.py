@@ -14,29 +14,24 @@ from iridium.core.logger import glob_logger
 
 
 class NovaBase(object):
-    def __init__(self, version, **kwargs):
+    def __init__(self, version='2', **kwargs):
         creds = keystone.keystone_retrieve(version='v2')
         nova_cred_list = [creds[key] for key in ["username", "password", "tenant_name", "auth_url"]]
-        self.nova_cl = nvclient.Client(version, *nova_cred_list)
-        self.ks = keystone.create_keystone()
+        self.nova_session = nvclient.Client(version, *nova_cred_list)
 
-# class NovaCMD(NovaBase):
+    # class NovaCMD(NovaBase):
 
-#    def __init__(self):
-#        super(NovaBase, self).__init__()
+    #    def __init__(self):
+    #        super(NovaBase, self).__init__()
 
     def delete_server(self, compute_instance):
         """
-        Stops a compute instance
 
-        :param compute_instance: A nova.server instance
-        :return: false if is instance was deleted, true otherwise
+        :param compute_instance:
+        :return:
         """
-        ident = compute_instance.id
-        compute_instance.delete()
-
-        res = any(itertools.dropwhile(lambda x: x.id != ident, self.nova_cl.servers.list()))
-        return not res
+        server = self.nova_session.servers.find(name=compute_instance)
+        server.delete()
 
     def boot_instance(self, server_name, server_image, flavor, **kwargs):
         """
@@ -56,14 +51,28 @@ class NovaBase(object):
         else:
             kwargs.update(default)
 
-        instance = self.nova_cl.servers.create(**kwargs)
-        servers = self.nova_cl.servers.list()
+        instance = self.nova_session.servers.create(**kwargs)
+        servers = self.nova_session.servers.list()
         for s in servers:
             if s.name == server_name:
                 return instance
         else:
             glob_logger.error("Base image did not boot up")
             return None
+
+    def boot_multi(self, server_name, server_image, flavor, count=1):
+        """
+
+        :param server_name:
+        :param server_image:
+        :param flavor:
+        :param nics:
+        :param count:
+        :return:
+        """
+        for node in count:
+            node_name = server_name + str(node)
+            self.boot_instance(node_name, server_image, flavor)
 
     def add_keypair(self, name, pubkey):
         """
@@ -78,7 +87,7 @@ class NovaBase(object):
                 txt = pub.read()
         else:
             txt = pubkey
-        kp = self.nova_cl.keypairs.create(name, public_key=txt)
+        kp = self.nova_session.keypairs.create(name, public_key=txt)
         return kp
 
     def add_sg_rule(self, parent, proto="tcp", from_port=22, to_port=22, cidr=None,
@@ -103,14 +112,14 @@ class NovaBase(object):
         :param group_id: source security group to apply to rule
         :return:
         """
-        sg = self.nova_cl.security_group_rules
+        sg = self.nova_session.security_group_rules
         res = sg.create(parent, ip_protocol=proto, cidr=cidr, from_port=from_port,
                         to_port=to_port, group_id=group_id)
         return res
 
     # AFAICT, the rescue operation with the added feature doesn't
     # seem to be in the python-novaclient, so let'nova_tests make our own function for now
-    def rescue_alt_image(self, server_id, admin_pw=None, rescue_id=None):
+    def rescue_alt_image(self, server_id, admin_pw=None, rescue_id=None, version='v2'):
         """
         Performs a rescue by replacing the compute instance with an alternate rescue
         image
@@ -118,12 +127,14 @@ class NovaBase(object):
         :param server_id: the uuid for the server to rescue
         :param rescue_id: optional uuid of the image to replace the rescued instance
                           with
+        :param version: keystone authentication version (v2 or v3)
         :return:
         """
-        nova_url = self.ks.service_catalog.url_for(service_type="compute",
+        ks = keystone.create_keystone(version=version)
+        nova_url = ks.service_catalog.url_for(service_type="compute",
                                                    endpoint_type="publicURL")
         rescue_url = os.path.join(nova_url, "servers/{}/rescue".format(server_id))
-        hdr = {"X-Auth-Token": self.ks.auth_token}
+        hdr = {"X-Auth-Token": ks.auth_token}
         print("Sending rescue api to url: {}".format(rescue_url))
 
         http = httplib2.Http()
@@ -147,16 +158,18 @@ class NovaBase(object):
         :param sort_fn:
         :return:
         """
+
         def outer(*args, **kwargs):
             result = fn(*args, **kwargs)
             if sort_fn is None:
                 return result
             else:
                 return [x for x in result if sort_fn(x)]
+
         return outer
 
     def list_flavors(self, filt=None):
-        seq = self.nova_cl.flavors.list()
+        seq = self.nova_session.flavors.list()
         if filt is None:
             return seq
         return [x for x in seq if filt(x)]
@@ -191,8 +204,8 @@ class NovaBase(object):
         :return:
         """
         if fn is None:
-            return self.nova_cl.servers.list()
-        return [srv for srv in self.nova_cl.servers.list() if fn(srv)]
+            return self.nova_session.servers.list()
+        return [srv for srv in self.nova_session.servers.list() if fn(srv)]
 
     def list_hypervisors(self, fn=None):
         """
@@ -203,8 +216,8 @@ class NovaBase(object):
                  function, a list of filtered hypervisors otherwise
         """
         if fn is None:
-            return self.nova_cl.hypervisors.list()
-        return [hv for hv in self.nova_cl.hypervisors.list() if fn(hv)]
+            return self.nova_session.hypervisors.list()
+        return [hv for hv in self.nova_session.hypervisors.list() if fn(hv)]
 
     def _poll_for_status(self, instance, status, poll_interval=2, timeout=300, log=False):
         """
@@ -290,14 +303,14 @@ class NovaBase(object):
         """
         policies = policies.split(",")
         body = {"name": name, "policies": policies}
-        return self.nova_cl.server_groups.create(**body)
+        return self.nova_session.server_groups.create(**body)
 
     def server_group_list(self):
         """
 
         :return: list of groups.
         """
-        return self.nova_cl.server_groups.list()
+        return self.nova_session.server_groups.list()
 
     def create_flavor(self, name, ram, num_vcpus, disksize):
         """
@@ -309,4 +322,7 @@ class NovaBase(object):
         :param disksize: the disksize in GB
         :return:
         """
-        return self.nova_cl.flavors.create(name, ram, num_vcpus, disksize)
+        return self.nova_session.flavors.create(name, ram, num_vcpus, disksize)
+
+    def list_images(self):
+        return self.nova_session.images.list()

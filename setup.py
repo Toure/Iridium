@@ -34,5 +34,5 @@ setup(
         "Topic :: Utilities",
         "License :: OSI Approved :: Apache License",
         'Programming Language :: Python :: 2.7',
-    ],
+    ], requires=['keystoneclient']
 )

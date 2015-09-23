@@ -18,7 +18,7 @@ class CinderBase(object):
         """
         :return: cinder auth object.
         """
-        ks_kwargs = keystone.get_keystone_init(**kwargs)
+        ks_kwargs = keystone.keystone_retrieve(**kwargs)
         cinder_auth = [ks_kwargs[key] for key in ["username", "password", "tenant_name", "auth_url"]]
         self.cinder_cl = client.Client(version, *cinder_auth)
 

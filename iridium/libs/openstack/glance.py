@@ -24,24 +24,13 @@ class GlanceError(Exception):
 class GlanceBase(object):
     def __init__(self, version):
         self.keystone_cl = keystone.create_keystone()
-        self.version = version
-        self.glance_client = self.create_glance(self.version)
-
-    def create_glance(self, version):
-        """create the glance client
-
-        Args:
-            auth_obj: The keystone client object
-            version: Which version of glance to create
-        """
         if version not in ["1", "2"]:
             raise ArgumentError("Invalid glance version choice")
 
         url_for = self.keystone_cl.service_catalog.url_for
         glance_endpt = url_for(service_type="image", endpoint_type="publicURL") + "/v" + version
-        glance = GlanceFactory(endpoint=glance_endpt,
-                               token=self.keystone_cl.auth_token)
-        return glance
+        self.glance_session = GlanceFactory(endpoint=glance_endpt,
+                                            token=self.keystone_cl.auth_token) 
 
     def glance_image_list(self):
         """
@@ -49,7 +38,7 @@ class GlanceBase(object):
         :param self: glance client
         :return: returns a generator object to list through
         """
-        return self.glance_client.images.list()
+        return self.glance_session.images.list()
 
     @staticmethod
     def glance_images_by_name(name, images):
@@ -79,7 +68,7 @@ class GlanceBase(object):
         :param filt_fn:
         :return:
         """
-        imgs = filt_fn(self.glance_client.glance_image_list())
+        imgs = filt_fn(self.glance_session.glance_image_list())
         for i in imgs:
             i.delete()
 
@@ -101,7 +90,7 @@ class GlanceBase(object):
             raise ArgumentError("{} is not a valid image".format(path))
 
         with open(path, "rb+") as fimage:
-            self.glance_client.images.create(name=img_name, is_public=public, data=fimage,
+            self.glance_session.images.create(name=img_name, is_public=public, data=fimage,
                                              disk_format=disk_format, properties=properties,
                                              container_format=container_format)
 
@@ -121,9 +110,9 @@ class GlanceBase(object):
         :param properties:
         :return:
         """
-        return self.glance_client.update(**properties)
+        return self.glance_session.update(**properties)
 
-    def set_image_property(img, meta):
+    def set_image_property(self, img, meta):
         """
         Updates the image properties
 
