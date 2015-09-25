@@ -11,7 +11,6 @@ Keystone module which will be responsible for authentication and base keystone c
 import os
 
 from keystoneclient.v2_0 import client
-
 from iridium.core.logger import glob_logger
 from iridium.config import config
 
@@ -68,7 +67,7 @@ def create_keystone(version='v2', **kwargs):
        password password for username.
        project_name (version 3) or tenant_name (version 2) project credential for user.
        user_domain_name domain for username only valid for version 3 protocol.
-       project_domain_name domain for specified project onnly valid for version 3.
+       project_domain_name domain for specified project only valid for version 3.
 
     """
     creds = keystone_retrieve(version, **kwargs)

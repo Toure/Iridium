@@ -1,4 +1,4 @@
-__author__ = "Toure Dunnon"
+_localhost_author__ = "Toure Dunnon"
 __license__ = "Apache License 2.0"
 __version__ = "0.1"
 __email__ = "toure@redhat.com"
@@ -11,7 +11,7 @@ from ironicclient import client
 class IronicBase(object):
     def __init__(self, version=1):
         creds = keystone.keystone_retrieve(version='v2')
-        ironic_kwargs = {'os_' + k: v for k, v in creds}
+        ironic_kwargs = {'os_' + k: v for k, v in creds.iteritems()}
         self.ironic_session = client.get_client(version, **ironic_kwargs)
 
     def chassis_create(self, name, count):
