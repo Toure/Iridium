@@ -28,7 +28,7 @@ class NovaBase(object):
         server = self.nova_session.servers.find(name=compute_instance)
         server.delete()
 
-    def boot_instance(self, server_name, server_image, flavor, **kwargs):
+    def boot_instance(self, server_name, server_image, flavor, count=1, **kwargs):
         """
         Boots up a compute instance
 
@@ -39,34 +39,25 @@ class NovaBase(object):
         :param flavor: the flavor
         :return: instance if successful, None otherwise
         """
-        default = dict([("name", server_name), ("image", server_image),
-                        ("flavor", flavor)])
-        if not kwargs:
-            kwargs = default
+        if count == 1:
+            default = dict([("name", server_name), ("image", server_image),
+                            ("flavor", flavor)])
+            if not kwargs:
+                kwargs = default
+            else:
+                kwargs.update(default)
+
+            instance = self.nova_session.servers.create(**kwargs)
+            servers = self.nova_session.servers.list()
+            for s in servers:
+                if s.name == server_name:
+                    return instance
+            else:
+                glob_logger.error("Base image did not boot up")
+                return None
         else:
-            kwargs.update(default)
-
-        instance = self.nova_session.servers.create(**kwargs)
-        servers = self.nova_session.servers.list()
-        for s in servers:
-            if s.name == server_name:
-                return instance
-        else:
-            glob_logger.error("Base image did not boot up")
-            return None
-
-    def boot_multi(self, server_name, server_image, flavor, count=1):
-        """
-
-        :param server_name:
-        :param server_image:
-        :param flavor:
-        :param nics:
-        :param count:
-        :return:
-        """
-        for node in count:
-            node_name = server_name + str(node)
+             for node in count:
+                 node_name = server_name + str(node)
             self.boot_instance(node_name, server_image, flavor)
 
     def add_keypair(self, name, pubkey):

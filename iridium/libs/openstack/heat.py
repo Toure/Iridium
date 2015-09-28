@@ -5,16 +5,14 @@ __email__ = "toure@redhat.com"
 __status__ = "Alpha"
 
 from iridium.libs.openstack import keystone
-from heatclient import client
+from heatclient.client import Client as hc
 
 
 class HeatBase(object):
     def __init__(self, version):
-        creds = keystone.create_keystone()
-        tenant_id = creds.tenants.id
-        heat_url = creds.auth_url + tenant_id
-        auth_token = creds.auth_token
-        self.heat_session = client.Client(version, endpoint=heat_url, token=auth_token)
+        ks = keystone.create_keystone()
+        heat_url = ks.auth_url + '/%s' % ks.tenant_id
+        self.heat_session_obj = hc(version, endpoint=heat_url, token=ks.auth_token)
 
     def stack_list(self):
         pass

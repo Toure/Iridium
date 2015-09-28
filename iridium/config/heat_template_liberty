@@ -1,0 +1,16 @@
+heat_template_version: 2015-10-15
+
+description:
+  # a description of the template
+
+parameter_groups:
+  # a declaration of input parameter groups and order
+
+parameters:
+  # declaration of input parameters
+
+resources:
+  # declaration of template resources
+
+outputs:
+  # declaration of output parameters
