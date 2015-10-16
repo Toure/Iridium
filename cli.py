@@ -4,9 +4,9 @@ __license__ = "Apache License 2.0"
 __version__ = "0.1"
 __email__ = "toure@redhat.com"
 __status__ = "Alpha"
-
-from code import InteractiveConsole
+from IPython.terminal.interactiveshell import TerminalInteractiveShell
 import atexit
+import sys
 
 from iridium.libs.openstack import basestack
 from iridium.libs.trackers import tracker
@@ -18,25 +18,31 @@ try:
     import readline
 except ImportError:
     print("readline module not found.")
-else:
-    import rlcompleter
-    readline.parse_and_bind("tab: complete")
 
 
-class Iridium(InteractiveConsole):
+class Iridium(TerminalInteractiveShell):
     """
-    Iridium is the main class which subclasses from the InteractviceConsole class, this allows us to
+    Iridium is the main class which subclasses from the TerminalInteractiveShell class, this allows us to
     embed a repl into the project.
     """
+    @staticmethod
+    def enable_gui(gui=None, app=None):
+        pass
 
     def interact(self, banner=None):
-        banner = "Welcome to Iridium"
+        banner = "Welcome to Iridium\n" \
+                 " ____  ____  ____  ____  ____  __  __  __  __ \n" \
+                 "(_  _)(  _ \(_  _)(  _ \(_  _)(  )(  )(  \/  )\n " \
+                 "_)(_  )   / _)(_  )(_) )_)(_  )(__)(  )    (\n"   \
+                 "(____)(_)\_)(____)(____/(____)(______)(_/\/\_)\n" \
+
+
         super(Iridium, self).interact(banner)
 
-    #def raw_input(self, prompt=""):
+    def raw_input(self, prompt=""):
         # TODO correct eof issue with custom prompt.
-    #    prompt = "iridium>>> "
-    #    return super(Iridium, self).raw_input(prompt)
+        prompt = "iridium >>>"
+        return TerminalInteractiveShell.raw_input(self, prompt)
 
 
 def save_history():
@@ -65,7 +71,7 @@ local_modules['neutron_mod'] = stack_modules.import_mod('neutron')
 local_modules['tracker_mod'] = tracker_module.import_mod(config.bug_tracker['tracker'])
 
 
-console = Iridium(locals=local_modules)
+console = Iridium(local_ns=local_modules)
 console.interact()
 
 atexit.register(save_history)
