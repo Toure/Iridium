@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/bin/env python3
 __author__ = "Toure Dunnon"
 __license__ = "Apache License 2.0"
 __version__ = "0.1"
@@ -23,7 +23,7 @@ else:
     readline.parse_and_bind("tab: complete")
 
 
-class Iridium(InteractiveConsole, object):
+class Iridium(InteractiveConsole):
     """
     Iridium is the main class which subclasses from the InteractviceConsole class, this allows us to
     embed a repl into the project.
@@ -33,10 +33,10 @@ class Iridium(InteractiveConsole, object):
         banner = "Welcome to Iridium"
         super(Iridium, self).interact(banner)
 
-    def raw_input(self, prompt=""):
+    #def raw_input(self, prompt=""):
         # TODO correct eof issue with custom prompt.
-        prompt = "iridium>>> "
-        return raw_input(prompt)
+    #    prompt = "iridium>>> "
+    #    return super(Iridium, self).raw_input(prompt)
 
 
 def save_history():

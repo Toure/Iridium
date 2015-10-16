@@ -1,9 +1,10 @@
 __author__ = 'toure'
-
+import abc
+from .tracker import Tracker
 from bugzilla import Bugzilla
 
 
-class Bugz(object):
+class Bugz(Tracker):
 
     def __init__(self):
         # TODO auth logic here
@@ -21,21 +22,21 @@ class Bugz(object):
         """
         return Bugzilla.createbug(**kwargs)
 
-    def update_case(self, bug, updates):
+    def update_case(self, bug_id, updates):
         """
 
         :return:
         """
-        Bugzilla.update_bugs(ids=bug, updates=updates)
+        Bugzilla.update_bugs(ids=bug_id, updates=updates)
 
-    def update_flag(self, idlist, flags):
+    def update_flag(self, id, flags_status):
         """
         Updates the flags associated with a bug report.
         :param idlist:
         :param flags:
         :return:
         """
-        Bugzilla.update_flags(idlist, flags=flags)
+        Bugzilla.update_flags(id, flags=flags_status)
 
     def get_component_info(self, product, component, force_refresh=False):
         """

@@ -2,7 +2,7 @@ import os
 import importlib
 import sys
 
-import core
+import iridium.core
 from iridium.config import config
 
 

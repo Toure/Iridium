@@ -4,6 +4,7 @@ __version__ = "0.1"
 __email__ = "toure@redhat.com"
 __status__ = "Alpha"
 
+import abc
 from importlib import import_module
 
 
@@ -17,4 +18,24 @@ class TrackerBase(object):
         :return: import object of requested module name.
         """
         return import_module("iridium.libs.trackers.%s" % platform_name)
+
+
+class Tracker(object):
+    __metaclass__ = abc.ABCMeta
+
+    @abc.abstractmethod
+    def create_case(self):
+        pass
+
+    @abc.abstractmethod
+    def update_case(self, bug_id, updates):
+        pass
+
+    @abc.abstractmethod
+    def update_flag(self, id, flags_status):
+        pass
+
+    @abc.abstractmethod
+    def update_comment(self):
+        pass
 
