@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/env python3
 __author__ = "Toure Dunnon"
 __license__ = "Apache License 2.0"
 __version__ = "0.1"
@@ -71,7 +71,7 @@ local_modules['neutron_mod'] = stack_modules.import_mod('neutron')
 local_modules['tracker_mod'] = tracker_module.import_mod(config.bug_tracker['tracker'])
 
 
-console = Iridium(local_ns=local_modules)
+console = Iridium(user_ns=local_modules)
 console.interact()
 
 atexit.register(save_history)
