@@ -41,7 +41,7 @@ class Iridium(TerminalInteractiveShell):
 
     def raw_input(self, prompt=""):
         # TODO correct eof issue with custom prompt.
-        prompt = "iridium >>>"
+        prompt = "iridium >>> "
         return TerminalInteractiveShell.raw_input(self, prompt)
 
 
@@ -66,6 +66,7 @@ local_modules['heat_mod'] = stack_modules.import_mod('heat')
 local_modules['swift_mod'] = stack_modules.import_mod('swift')
 local_modules['glance_mod'] = stack_modules.import_mod('glance')
 local_modules['cinder_mod'] = stack_modules.import_mod('cinder')
+local_modules['manila_mod'] = stack_modules.import_mod('manila')
 local_modules['neutron_mod'] = stack_modules.import_mod('neutron')
 # TODO possibly another way to determine tracker platform.
 local_modules['tracker_mod'] = tracker_module.import_mod(config.bug_tracker['tracker'])
