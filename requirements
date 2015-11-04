@@ -7,6 +7,7 @@ python-neutronclient
 python-cinderclient
 python-swiftclient
 python-bugzilla
+python-manilaclient
 lauchpadlib
 python-jenkins
 gerritlib
