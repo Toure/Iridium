@@ -30,7 +30,7 @@ class Iridium(TerminalInteractiveShell):
         pass
 
     def interact(self, banner=None):
-        banner = "Welcome to Iridium\n" \
+        banner = "Welcome to\n" \
                  " ____  ____  ____  ____  ____  __  __  __  __ \n" \
                  "(_  _)(  _ \(_  _)(  _ \(_  _)(  )(  )(  \/  )\n " \
                  "_)(_  )   / _)(_  )(_) )_)(_  )(__)(  )    (\n"   \

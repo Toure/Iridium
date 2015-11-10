@@ -25,7 +25,7 @@ setup(
     author_email="toure@redhat.com",
     description="OpenStack functional test framework.",
     license="Apache License 2",
-    keywords="openstack test framework",
+    keywords="Openstack test shell",
     url="http://toure.github.io/Iridium/",
     packages=['iridium', 'stack_tests'],
     long_description=read('README'),
@@ -36,5 +36,5 @@ setup(
         'Programming Language :: Python :: 3.4',
     ], requires=['python-keystoneclient', 'python-novaclient', 'python-glanceclient',
                  'python-ironicclient', 'python-heatclient', 'python-cinderclient', 'python-swiftclient',
-                 'python-neutronclient', 'bugzilla', 'IPython']
+                 'python-neutronclient', 'python-manilaclient', 'bugzilla', 'IPython']
 )

@@ -1,5 +1,5 @@
 # Iridium
-OpenStack Functional Test Framework.
+OpenStack Functional Test Shell.
 
 ### Introduction
 
