@@ -6,13 +6,11 @@ import time
 import httplib2
 import novaclient.client as nvclient
 from novaclient.exceptions import NotFound
-
-from iridium.libs.openstack import keystone
-from iridium.core.logger import glob_logger
-from iridium.plugins.nova import NovaPlugin
+from ..openstack import keystone
+from ...core.logger import glob_logger
 
 
-class NovaBase(metaclass=NovaPlugin):
+class NovaBase(object):
     def __init__(self, version='2', **kwargs):
         creds = keystone.keystone_retrieve(version='v2')
         nova_cred_list = [creds[key] for key in ["username", "password", "tenant_name", "auth_url"]]
@@ -55,10 +53,10 @@ class NovaBase(metaclass=NovaPlugin):
                 glob_logger.error("Base image did not boot up")
                 return None
         else:
-             for node in count:
-                 node_name = server_name + str(node)
+            for node in count:
+                node_name = server_name + str(node)
 
-                 self.boot_instance(node_name, server_image, flavor)
+                self.boot_instance(node_name, server_image, flavor)
 
     def add_keypair(self, name, pubkey):
         """
@@ -118,7 +116,7 @@ class NovaBase(metaclass=NovaPlugin):
         """
         ks = keystone.create_keystone(version=version)
         nova_url = ks.service_catalog.url_for(service_type="compute",
-                                                   endpoint_type="publicURL")
+                                              endpoint_type="publicURL")
         rescue_url = os.path.join(nova_url, "servers/{}/rescue".format(server_id))
         hdr = {"X-Auth-Token": ks.auth_token}
         print("Sending rescue api to url: {}".format(rescue_url))
@@ -313,5 +311,5 @@ class NovaBase(metaclass=NovaPlugin):
     def list_images(self):
         return self.nova_session.images.list()
 
-#@six.add_metaclass(abc.ABCMeta)
-#class NovaPluginBase(object):
+# @six.add_metaclass(abc.ABCMeta)
+# class NovaPluginBase(object):

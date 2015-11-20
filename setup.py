@@ -33,7 +33,9 @@ setup(
         "Development Status :: 1 - Alpha",
         "Topic :: Utilities",
         "License :: OSI Approved :: Apache License",
+        'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ], requires=['python-keystoneclient', 'python-novaclient', 'python-glanceclient',
                  'python-ironicclient', 'python-heatclient', 'python-cinderclient', 'python-swiftclient',
                  'python-neutronclient', 'python-manilaclient', 'bugzilla', 'IPython']

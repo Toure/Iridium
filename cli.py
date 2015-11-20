@@ -7,7 +7,6 @@ __status__ = "Alpha"
 from IPython.terminal.interactiveshell import TerminalInteractiveShell
 import atexit
 import sys
-
 from iridium.libs.openstack import basestack
 from iridium.libs.trackers import tracker
 from iridium.core.logger import glob_logger
@@ -25,17 +24,17 @@ class Iridium(TerminalInteractiveShell):
     Iridium is the main class which subclasses from the TerminalInteractiveShell class, this allows us to
     embed a repl into the project.
     """
+
     @staticmethod
     def enable_gui(gui=None, app=None):
         pass
 
     def interact(self, banner=None):
-        banner = "Welcome to\n" \
+        banner = "\t\t  Welcome to\n" \
                  " ____  ____  ____  ____  ____  __  __  __  __ \n" \
                  "(_  _)(  _ \(_  _)(  _ \(_  _)(  )(  )(  \/  )\n " \
-                 "_)(_  )   / _)(_  )(_) )_)(_  )(__)(  )    (\n"   \
-                 "(____)(_)\_)(____)(____/(____)(______)(_/\/\_)\n" \
-
+                 "_)(_  )   / _)(_  )(_) )_)(_  )(__)(  )    (\n" \
+                 "(____)(_)\_)(____)(____/(____)(______)(_/\/\_)\n"
 
         super(Iridium, self).interact(banner)
 
@@ -57,7 +56,7 @@ def save_history():
 
 
 local_modules = locals()
-stack_modules = basestack.Basestack()
+stack_modules = basestack.Basestack
 tracker_module = tracker.TrackerBase()
 local_modules['nova_mod'] = stack_modules.import_mod('nova')
 local_modules['keystone_mod'] = stack_modules.import_mod('keystone')
@@ -70,7 +69,6 @@ local_modules['manila_mod'] = stack_modules.import_mod('manila')
 local_modules['neutron_mod'] = stack_modules.import_mod('neutron')
 # TODO possibly another way to determine tracker platform.
 local_modules['tracker_mod'] = tracker_module.import_mod(config.bug_tracker['tracker'])
-
 
 console = Iridium(user_ns=local_modules)
 console.interact()

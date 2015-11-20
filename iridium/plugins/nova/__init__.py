@@ -1,16 +1,17 @@
-class NovaPlugin(type):
-    def __init__(cls, name, bases, what):
-        super().__init__(what)
-        if not hasattr(cls, 'registry'):
-            cls.registry = set()
-        else:
-            cls.registry.add(cls)
-            cls.registry -= set(bases)
+from abc import abstractstaticmethod
+from ...plugins import PluginManager
 
-    def __iter__(cls):
-        """
 
-        :param cls:
-        :return:
+class NovaPluginBase(metaclass=PluginManager):
+    """
+    Nova Plugin base class is the central package metaclass for all new plugins.
+    """
+    @abstractstaticmethod
+    def register_path(self):
         """
-        return iter(cls.registry)
+        register path method is resposible for two things,
+            1)providing a search path.
+            2) registration signal for new plugin.
+        :return: None
+        """
+        pass

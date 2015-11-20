@@ -18,3 +18,13 @@ class Basestack(object):
         :return: import object of requested module name.
         """
         return import_module("iridium.libs.openstack.%s" % module_name)
+
+    def factory(self, module_object):
+        """
+        Factory will return a class reference object which will allow the cli to automatically instantiated
+        the member when called.
+
+        :param module_object: module which to create a reference.
+        :return: factory object.
+        """
+        pass
