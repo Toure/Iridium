@@ -47,7 +47,7 @@ class PluginManager(type):
                     # TODO clean up this logic and replace imp with current importlibs
                     f, filename, desc = imp.find_module(
                         module, [plugin_path])
-                    globals()[module] = mod_obj = imp.load_module(
+                    globals()[module] = imp.load_module(
                         module, f, filename, desc)
 
 
