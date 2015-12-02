@@ -44,3 +44,7 @@ rdo_clones = dict(
 bug_tracker = dict(
     tracker='bugz'
 )
+
+iridium_replay_logs = dict(
+    pickle_file='/tmp/iridium_logs/iridium.replay'
+)

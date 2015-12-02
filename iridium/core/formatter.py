@@ -1,6 +1,8 @@
 from tabulate import tabulate
 from functools import wraps
 from .exceptions import ArgumentError
+#from ..config import config
+#import pickle
 
 
 def echo(fh):
@@ -22,7 +24,6 @@ def echo(fh):
                 fn_calls.append([func.__name__, kwargs, ret])
             else:
                 raise ArgumentError
-            print(fn_calls)
             collector(fh, fn_calls)
         return wrapper
     return func_wrapper
@@ -58,3 +59,18 @@ def collector(filehandle, table_info, headers=None):
         ret_val = "Please check %s data was not saved." % filename
         filehandle.close()
     return ret_val
+
+
+def packer(func, *args, **kwargs):
+    """Packer is responsible for creating a datastructure which will be
+    needed for replay.
+
+    Args:
+        func (TYPE): function object which will be store in datastructure.
+        *args: arguments for function object.
+        **kwargs: keyword arguments for function.
+
+    Returns:
+        TYPE: dict
+    """
+    pass
