@@ -1,15 +1,7 @@
-from ...plugins.nova import NovaPluginBase
+from ...libs.openstack.nova import NovaExt
 
 
-class TestAction(NovaPluginBase):
-    def __new__(cls, *args, **kwargs):
-        if cls is TestAction:
-            raise TypeError("%s class may not be instantiated" % cls.__name__)
-        return object.__new__(cls, *args, **kwargs)
-
-    def register_path(self):
-        pass
-
+class TestAction(NovaExt):
     def bar(self):
         print("this is bar.")
 

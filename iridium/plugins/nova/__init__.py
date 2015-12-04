@@ -1,17 +1,18 @@
-from abc import abstractstaticmethod
-from ...plugins import PluginManager
+from abc import abstractmethod
+from ...plugins import PluginStore
+import inspect
+import sys
 
 
-class NovaPluginBase(metaclass=PluginManager):
+class NovaExt(object, metaclass=PluginStore):
     """
-    Nova Plugin base class is the central package metaclass for all new plugins.
+    NovaExt is responsible for deriving the metaclass and to provide a
+    central source for extensions.
     """
-    @abstractstaticmethod
-    def register_path(self):
-        """
-        register path method is resposible for two things,
-            1)providing a search path.
-            2) registration signal for new plugin.
-        :return: None
-        """
+    def __init__(self):
+       # TODO complete logic to auto import.
+       #    self.clsmembers = inspect.getmembers(sys.modules[__name__], inspect.isclass)
+
+    @abstractmethod
+    def register_signals(self):
         pass
