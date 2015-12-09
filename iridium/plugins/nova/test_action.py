@@ -1,7 +1,11 @@
-from ...libs.openstack.nova import NovaExt
+from . import NovaExt
 
 
 class TestAction(NovaExt):
+
+    def register_signals(self):
+        pass
+
     def bar(self):
         print("this is bar.")
 

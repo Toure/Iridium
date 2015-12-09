@@ -1,6 +1,3 @@
-import os
-import importlib
-
 class PluginStore(type):
     """
     PluginStore will register plugin and place them into a list for retrieval by
@@ -30,7 +27,3 @@ class PluginStore(type):
         # this must be defined in the derived class
         instance.register_signals()
 
-    def find_plugins(cls):
-        """ Traverse registered plugin directory and import non-loaded modules  """
-        # TODO complete me.
-        pass
