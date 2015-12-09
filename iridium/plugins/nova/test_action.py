@@ -1,7 +1,7 @@
-from . import NovaExt
+from ...plugins import Plugin
 
 
-class TestAction(NovaExt):
+class TestAction(Plugin):
 
     def register_signals(self):
         pass

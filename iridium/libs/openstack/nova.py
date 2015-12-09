@@ -4,7 +4,7 @@ import os
 import json
 import time
 import httplib2
-from ...plugins.nova import NovaExt
+from ...plugins import Plugin
 import novaclient.client as nvclient
 from novaclient.exceptions import NotFound
 from ..openstack import keystone
@@ -16,8 +16,8 @@ class NovaBase(object):
         creds = keystone.keystone_retrieve(version='v2')
         nova_cred_list = [creds[key] for key in ["username", "password", "tenant_name", "auth_url"]]
         self.nova_session = nvclient.Client(version, *nova_cred_list)
-        plugin_obj = NovaExt()
-        self.plugins_list = plugin_obj.plugins
+        self.plugin_obj = Plugin()
+
         # TODO add logic which will set new property based on self.plugin_list
 
     def delete_server(self, compute_instance):

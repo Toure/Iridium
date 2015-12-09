@@ -1,3 +1,8 @@
+from abc import abstractmethod
+from importlib import import_module
+import os
+
+
 class PluginStore(type):
     """
     PluginStore will register plugin and place them into a list for retrieval by
@@ -27,3 +32,30 @@ class PluginStore(type):
         # this must be defined in the derived class
         instance.register_signals()
 
+
+class Plugin(object, metaclass=PluginStore):
+    """
+    NovaExt is responsible for deriving the metaclass and to provide a
+    central source for extensions.
+    """
+
+    @abstractmethod
+    def register_signals(self):
+        pass
+
+    def activate_plugins(self, package_name):
+        """
+        Activate plugins will traverse the given package name and import the modules in the
+        path.
+        :param package_name: name of package to append to basedir
+        :return: plugin.
+        """
+        import iridium.plugins
+        rootdir = os.path.dirname(iridium.plugins.__file__)
+        basedir = rootdir + '/' + package_name
+        for basedir, dirs, files in os.walk(basedir):
+            for file in files:
+                if not file.startswith('__') and file.endswith('.py'):
+                    file = file[0:-3]
+                    print(u'iridium.plugins.{0:s}.{1:s}'.format(package_name, file))
+                    return import_module(u'iridium.plugins.{0:s}.{1:s}'.format(package_name, file))
