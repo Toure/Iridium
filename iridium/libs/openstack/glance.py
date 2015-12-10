@@ -9,6 +9,7 @@ import os
 from iridium.core.exceptions import ArgumentError
 from iridium import add_client_to_path
 from iridium.core.downloader import Downloader
+from ...plugins import Plugin
 
 DEBUG = False
 add_client_to_path(debug=DEBUG)
@@ -30,7 +31,9 @@ class GlanceBase(object):
         url_for = self.keystone_cl.service_catalog.url_for
         glance_endpt = url_for(service_type="image", endpoint_type="publicURL") + "/v" + version
         self.glance_session = GlanceFactory(endpoint=glance_endpt,
-                                            token=self.keystone_cl.auth_token) 
+                                            token=self.keystone_cl.auth_token)
+        plugin = Plugin()
+        self.extension = plugin.activate_plugins('glance')
 
     def glance_image_list(self):
         """

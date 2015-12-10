@@ -1,6 +1,7 @@
 from swiftclient import client as sc
 from iridium.libs.openstack import keystone
 from pprint import pprint
+from ...plugins import Plugin
 
 
 class SwiftBase(object):
@@ -11,6 +12,8 @@ class SwiftBase(object):
                                               key=self.ks.password,
                                               tenant_name=self.ks.tenant_name,
                                               auth_version='2.0').get_auth()[0]
+        plugin = Plugin()
+        self.extension = plugin.activate_plugins('swift')
 
     def list_container(self):
         """

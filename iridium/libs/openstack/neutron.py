@@ -7,12 +7,14 @@ __status__ = "Alpha"
 from neutronclient.v2_0.client import Client
 from iridium.core.exceptions import AmbiguityException
 from iridium.libs.openstack import keystone
-
+from ...plugins import Plugin
 
 class NeutronBase(object):
     def __init__(self):
         creds = keystone.keystone_retrieve()
         self.neutron_session = Client(**creds)
+        plugin = Plugin()
+        self.extension = plugin.activate_plugins('neutron')
 
 
 def list_neutron_nets(neutron_session, filter_fn=None):

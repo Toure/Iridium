@@ -6,7 +6,7 @@ __status__ = "Alpha"
 
 from cinderclient import client
 from iridium.libs.openstack import keystone
-
+from ...plugins import Plugin
 
 class CinderBase(object):
     """
@@ -21,6 +21,8 @@ class CinderBase(object):
         ks_kwargs = keystone.keystone_retrieve(**kwargs)
         cinder_auth = [ks_kwargs[key] for key in ["username", "password", "tenant_name", "auth_url"]]
         self.cinder_session = client.Client(version, *cinder_auth)
+        plugin = Plugin()
+        self.extension = plugin.activate_plugins('cinder')
 
     def list_zone(self):
         """

@@ -8,7 +8,7 @@ from keystoneclient.auth.identity import v2
 from keystoneclient import session
 from manilaclient import client
 from iridium.libs.openstack import keystone
-
+from ...plugins import Plugin
 
 class ManilaBase(object):
     """
@@ -29,6 +29,8 @@ class ManilaBase(object):
         keystone_authorization = v2.Password(**keystone_args)
         keystone_session = session.Session(auth=keystone_authorization)
         self.manila_session = client.Client(client_version, session=keystone_session)
+        plugin = Plugin()
+        self.extension = plugin.activate_plugins('manila')
 
     def create_share(self, size, protocol, **kwargs):
         """
