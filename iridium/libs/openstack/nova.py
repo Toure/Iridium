@@ -16,9 +16,8 @@ class NovaBase(object):
         creds = keystone.keystone_retrieve(version='v2')
         nova_cred_list = [creds[key] for key in ["username", "password", "tenant_name", "auth_url"]]
         self.nova_session = nvclient.Client(version, *nova_cred_list)
-        self.plugin_obj = Plugin()
-
-        # TODO add logic which will set new property based on self.plugin_list
+        plugin = Plugin()
+        self.extensions = plugin.activate_plugins('nova')
 
     def delete_server(self, compute_instance):
         """

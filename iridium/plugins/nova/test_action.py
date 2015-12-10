@@ -11,3 +11,9 @@ class TestAction(Plugin):
 
     def baz(self):
         print("this is baz.")
+
+class CustomAction(Plugin):
+    def register_signals(self):
+        pass
+    def bza(self):
+        print("welcome")

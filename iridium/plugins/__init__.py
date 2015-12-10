@@ -4,6 +4,7 @@ import os
 
 
 class PluginStore(type):
+
     """
     PluginStore will register plugin and place them into a list for retrieval by
     base class.
@@ -13,7 +14,7 @@ class PluginStore(type):
 
         if not hasattr(cls, 'plugins'):
             # Called when the metaclass is first instantiated
-            cls.plugins = []
+            cls.plugins = {}
         else:
             # Called when a plugin class is imported
             cls.register_plugin(cls)
@@ -26,7 +27,7 @@ class PluginStore(type):
         instance = plugin()
 
         # save the plugin reference
-        cls.plugins.append(instance)
+        cls.plugins[cls.__name__] = instance
 
         # apply plugin logic - in this case connect the plugin to blinker signals
         # this must be defined in the derived class
@@ -34,11 +35,11 @@ class PluginStore(type):
 
 
 class Plugin(object, metaclass=PluginStore):
+
     """
     NovaExt is responsible for deriving the metaclass and to provide a
     central source for extensions.
     """
-
     @abstractmethod
     def register_signals(self):
         pass
