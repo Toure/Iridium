@@ -45,6 +45,10 @@ bug_tracker = dict(
     tracker='bugz'
 )
 
+iridium_function_calls = dict(
+    function_log='/tmp/iridium_logs/iridium_func_call'
+)
+
 iridium_replay_logs = dict(
     pickle_file='/tmp/iridium_logs/iridium.replay'
 )

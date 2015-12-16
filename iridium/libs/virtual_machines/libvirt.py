@@ -168,7 +168,7 @@ def verify_modprobe(host, proc_type="intel", set=False):
     line = "options kvm_{} nested=y".format(proc_type)
 
     def set_options(cfg):
-        cmd = "echo {} >> /etc/modprobe.d/dist.conf".format(cfg)
+        cmd = "trap {} >> /etc/modprobe.d/dist.conf".format(cfg)
         res = Command(cmd, host=host)(showout=False)
         return res == 0
 

@@ -12,3 +12,8 @@ class Example(Plugin):
 
     def foo(self):
         print('From the Example Class...')
+
+
+class Foo(Plugin):
+    def baz(self):
+        print("Hello")

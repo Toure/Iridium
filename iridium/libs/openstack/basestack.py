@@ -27,4 +27,5 @@ class Basestack(object):
         :param module_object: module which to create a reference.
         :return: factory object.
         """
+        # TODO look at placing this logic into the __call__ method to perform this function.
         pass

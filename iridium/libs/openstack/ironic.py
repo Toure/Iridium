@@ -11,7 +11,7 @@ from ...plugins import Plugin
 class IronicBase(object):
     def __init__(self, version=1):
         creds = keystone.keystone_retrieve(version='v2')
-        ironic_kwargs = {'os_' + k: v for k, v in creds.iteritems()}
+        ironic_kwargs = {'os_' + k: v for k, v in creds.items()}
         self.ironic_session = client.get_client(version, **ironic_kwargs)
         plugin = Plugin()
         self.extension = plugin.activate_plugins('ironic')
