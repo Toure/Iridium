@@ -28,12 +28,15 @@ class NovaBase(object):
         server = self.nova_session.servers.find(name=compute_instance)
         server.delete()
 
-    def boot_instance(self, server_name, server_image, flavor, count=1, **kwargs):
+    def boot_instance(self, server_name, server_image, flavor, netid, count=1, **kwargs):
         """
         Boots up a compute instance
 
         So, in kilo you now have to specify a neutron_tests network ID
 
+        :param netid:
+        :param count:
+        :param kwargs:
         :param server_name: string of name to give to compute instance
         :param server_image: the nova image object to boot up
         :param flavor: the flavor
@@ -41,7 +44,7 @@ class NovaBase(object):
         """
         if count == 1:
             default = dict([("name", server_name), ("image", server_image),
-                            ("flavor", flavor)])
+                            ("flavor", flavor), ("netid", netid)])
             if not kwargs:
                 kwargs = default
             else:
@@ -59,7 +62,7 @@ class NovaBase(object):
             for node in count:
                 node_name = server_name + str(node)
 
-                self.boot_instance(node_name, server_image, flavor)
+                self.boot_instance(node_name, server_image, flavor, netid)
 
     def add_keypair(self, name, pubkey):
         """

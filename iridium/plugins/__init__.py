@@ -44,7 +44,6 @@ class PluginStore(type):
         #instance.register_signals()
 
 
-
 class Plugin(object, metaclass=PluginStore):
 
     """
@@ -68,5 +67,5 @@ class Plugin(object, metaclass=PluginStore):
             for file in files:
                 if not file.startswith('__') and file.endswith('.py'):
                     file = file[0:-3]
-                    print(u'iridium.plugins.{0:s}.{1:s}'.format(package_name, file))
+                    # print(u'iridium.plugins.{0:s}.{1:s}'.format(package_name, file))
                     return import_module(u'iridium.plugins.{0:s}.{1:s}'.format(package_name, file))

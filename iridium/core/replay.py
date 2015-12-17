@@ -1,12 +1,10 @@
 """
 This module will read in output files and replay.
 """
-# import pickle
-
+import pickle
 
 
 class Replay(object):
-
     """
     Replay will allow users to import a iridium history file and
     replay instructions at a set interval.

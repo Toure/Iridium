@@ -38,7 +38,6 @@ def collector(table_info, headers=None):
     if headers is None:
         headers = ["Function Name", "Arguments", "Keyword Arguments"]
     table_out = tabulate(table_info, headers, tablefmt="grid")
-    print(table_out)
     status = filehandle.write(table_out)
 
     if status > 0:
