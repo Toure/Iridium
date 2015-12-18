@@ -6,9 +6,9 @@ __status__ = "Alpha"
 
 auth_info = dict(
     v2=dict(
-        auth_url='http://10.1.239.3:5000/v2.0/',
+        auth_url='http://localhost:5000/v2.0/',
         username='admin',
-        password='open!Stack',
+        password='secret',
         tenant_name='admin'
     ),
     v3=dict(

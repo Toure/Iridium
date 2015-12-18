@@ -10,6 +10,7 @@ from manilaclient import client
 from iridium.libs.openstack import keystone
 from ...plugins import Plugin
 
+
 class ManilaBase(object):
     """
     ManilaBase is used for commands that can be issued to Manila.

@@ -39,7 +39,6 @@ class Iridium(TerminalInteractiveShell):
         super(Iridium, self).interact(banner)
 
     def raw_input(self, prompt=""):
-        # TODO correct eof issue with custom prompt.
         prompt = "iridium >>> "
         return TerminalInteractiveShell.raw_input(self, prompt)
 
