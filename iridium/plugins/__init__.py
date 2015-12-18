@@ -6,7 +6,7 @@ from ..core.trapper import trap
 class Introspect(type):
 
     """
-    PluginStore will register plugin and place them into a list for retrieval by
+    Introspect will register plugin and place them into a list for retrieval by
     base class.
     """
     def __init__(cls, name, bases, attrs):
