@@ -1,4 +1,4 @@
-from ...plugins import Plugin
+from iridium.plugins.inspector import Plugin
 
 
 class Common(Plugin):
