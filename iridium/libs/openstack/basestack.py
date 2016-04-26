@@ -10,7 +10,7 @@ from importlib import import_module
 class Basestack(object):
 
     @staticmethod
-    def import_mod(module_name):
+    def import_mod(module_name: str) -> object:
         """
         Import mod will return an initialized import path from the specified module name.
 

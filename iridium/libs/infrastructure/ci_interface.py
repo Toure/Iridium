@@ -13,7 +13,7 @@ def connect(url: str, username: str, password: str, timeout: int=None) -> object
     :param timeout: Server connection timeout in secs (default: not set), int
     :return: connection object.
     """
-    server = jenkins.Jenkins(url, username=username, password=password, timeout)
+    server = jenkins.Jenkins(url, username=username, password=password, timeout=timeout)
 
     return server
 

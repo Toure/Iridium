@@ -8,7 +8,7 @@ python-cinderclient
 python-swiftclient
 python-bugzilla
 python-manilaclient
-lauchpadlib
+#lauchpadlib
 python-jenkins
 gerritlib
 httplib2

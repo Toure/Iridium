@@ -15,12 +15,13 @@ from iridium.core.logger import glob_logger
 from iridium.config import config
 
 
-def keystone_retrieve(version='v2', read_export=False, **kwargs):
+def keystone_retrieve(version: str= 'v2', read_export: bool = False, **kwargs: dict) -> dict:
     """
     Simple function to retrieve configuration information from
     the global environment, if no kwargs is passed in, the necessary
     information is retrieved from the environment (ie, as when you source
     keystonerc_admin)
+    :type read_export: bool
     :param version sets the version of ReST protocol to implement. (ie. "/v2.0", "/v3")
     kwargs:
        auth_url location to contact the keystone server.
