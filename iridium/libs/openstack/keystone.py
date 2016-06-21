@@ -56,7 +56,7 @@ def keystone_retrieve(version: str= 'v2', read_export: bool = False, **kwargs: d
     return creds
 
 
-def create_keystone(version='v2', **kwargs):
+def create_keystone(version: str= 'v2', **kwargs: dict) -> object:
     """Creates the keystone object
 
     :param version of protocol to communicate with Keystone over, the two options are

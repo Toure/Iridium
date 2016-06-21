@@ -5,6 +5,9 @@ __email__ = "toure@redhat.com"
 __status__ = "Alpha"
 
 from importlib import import_module
+import inspect
+
+from .keystone import create_keystone
 
 
 class Basestack(object):
@@ -17,15 +20,11 @@ class Basestack(object):
         :param module_name: openstack module name of interest (str).
         :return: import object of requested module name.
         """
-        return import_module("iridium.libs.openstack.%s" % module_name)
+        if module_name == 'keystone':
+            class_name = create_keystone(version='v2')
 
-    def factory(self, module_object):
-        """
-        Factory will return a class reference object which will allow the cli to automatically instantiated
-        the member when called.
+        else:
+            class_name = [obj for name, obj in inspect.getmembers(import_module(
+                "iridium.libs.openstack.%s" % module_name)) if inspect.isclass(obj)][0]
 
-        :param module_object: module which to create a reference.
-        :return: factory object.
-        """
-        # TODO look at placing this logic into the __call__ method to perform this function.
-        pass
+        return class_name

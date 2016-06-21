@@ -39,6 +39,7 @@ class Iridium(TerminalInteractiveShell):
         super(Iridium, self).interact(banner)
 
     def raw_input(self, prompt=""):
+        #TODO add logic to create a new profile.
         prompt = "iridium >>> "
         return TerminalInteractiveShell.raw_input(self, prompt)
 
@@ -62,11 +63,10 @@ def load_modules():
     local_modules = locals()
     stack_modules = basestack.Basestack
     tracker_module = tracker.TrackerBase()
-    #module_list = ['nova', 'keystone', 'ironic', 'heat', 'swift', 'glance', 'cinder','manila', 'neutron']
-    module_list = ['nova', 'ironic', 'heat', 'swift', 'glance', 'cinder', 'manila', 'neutron']
+    module_list = ['nova', 'keystone', 'ironic', 'heat', 'swift', 'glance', 'cinder','manila', 'neutron']
 
     for mod_name in module_list:
-        local_modules[mod_name+'_mod'] = stack_modules.import_mod(mod_name)
+        local_modules[mod_name+'_cls'] = stack_modules.import_mod(mod_name)
 
     local_modules['tracker_mod'] = tracker_module.import_mod(config.bug_tracker['tracker'])
     console = Iridium(user_ns=local_modules)
