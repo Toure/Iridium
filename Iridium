@@ -54,22 +54,23 @@ def save_history():
     readline.write_history_file(log_path)
 
 
-local_modules = locals()
-stack_modules = basestack.Basestack
-tracker_module = tracker.TrackerBase()
-local_modules['nova_mod'] = stack_modules.import_mod('nova')
-local_modules['keystone_mod'] = stack_modules.import_mod('keystone')
-local_modules['ironic_mod'] = stack_modules.import_mod('ironic')
-local_modules['heat_mod'] = stack_modules.import_mod('heat')
-local_modules['swift_mod'] = stack_modules.import_mod('swift')
-local_modules['glance_mod'] = stack_modules.import_mod('glance')
-local_modules['cinder_mod'] = stack_modules.import_mod('cinder')
-local_modules['manila_mod'] = stack_modules.import_mod('manila')
-local_modules['neutron_mod'] = stack_modules.import_mod('neutron')
-# TODO possibly another way to determine tracker platform.
-local_modules['tracker_mod'] = tracker_module.import_mod(config.bug_tracker['tracker'])
+def load_modules():
+    """
+    Load module will construct all plugin objects for the shell enviornment, and start
+    the shell.
+    """
+    local_modules = locals()
+    stack_modules = basestack.Basestack
+    tracker_module = tracker.TrackerBase()
+    #module_list = ['nova', 'keystone', 'ironic', 'heat', 'swift', 'glance', 'cinder','manila', 'neutron']
+    module_list = ['nova', 'ironic', 'heat', 'swift', 'glance', 'cinder', 'manila', 'neutron']
 
-console = Iridium(user_ns=local_modules)
-console.interact()
+    for mod_name in module_list:
+        local_modules[mod_name+'_mod'] = stack_modules.import_mod(mod_name)
 
+    local_modules['tracker_mod'] = tracker_module.import_mod(config.bug_tracker['tracker'])
+    console = Iridium(user_ns=local_modules)
+    console.interact()
+
+load_modules()
 atexit.register(save_history)
