@@ -3,6 +3,8 @@ python-openstackclient
 python-keystoneclient
 python-glanceclient
 python-novaclient
+python-ironicclient
+python-heatclient
 python-neutronclient
 python-cinderclient
 python-swiftclient
@@ -15,4 +17,4 @@ httplib2
 libvirt-python
 untangle
 pytest
-oslogmerger
+#oslogmerger
