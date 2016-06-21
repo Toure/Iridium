@@ -6,7 +6,7 @@ __status__ = "Alpha"
 
 from neutronclient.v2_0.client import Client
 from iridium.libs.openstack import keystone
-from ...plugins import Plugin
+from iridium.plugins.inspector import Plugin
 
 class NeutronBase(object):
     def __init__(self):

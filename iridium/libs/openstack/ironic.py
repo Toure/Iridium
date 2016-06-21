@@ -6,7 +6,7 @@ __status__ = "Alpha"
 
 from iridium.libs.openstack import keystone
 from ironicclient import client
-from iridium.plugins import Plugin
+from iridium.plugins.inspector import Plugin
 
 
 class IronicBase(object):

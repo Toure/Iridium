@@ -6,7 +6,7 @@ __status__ = "Alpha"
 
 from iridium.libs.openstack import keystone
 from heatclient.client import Client as hc
-from iridium.plugins import Plugin
+from iridium.plugins.inspector import Plugin
 
 
 class HeatBase(object):

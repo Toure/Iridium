@@ -6,7 +6,7 @@ __status__ = "Alpha"
 
 from cinderclient import client
 from iridium.libs.openstack import keystone
-from ...plugins import Plugin
+from iridium.plugins.inspector import Plugin
 
 
 class CinderBase(object):

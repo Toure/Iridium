@@ -8,7 +8,7 @@ from keystoneclient.auth.identity import v2
 from keystoneclient import session
 from manilaclient import client
 from iridium.libs.openstack import keystone
-from ...plugins import Plugin
+from iridium.plugins.inspector import Plugin
 
 
 class ManilaBase(object):

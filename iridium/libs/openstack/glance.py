@@ -6,7 +6,7 @@ __status__ = "Alpha"
 
 from iridium.core.exceptions import ArgumentError
 from iridium import add_client_to_path
-from iridium.plugins import Plugin
+from iridium.plugins.inspector import Plugin
 
 DEBUG = False
 add_client_to_path(debug=DEBUG)

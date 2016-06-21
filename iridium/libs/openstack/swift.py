@@ -1,6 +1,6 @@
 from swiftclient import client as sc
 from iridium.libs.openstack import keystone
-from ...plugins import Plugin
+from iridium.plugins.inspector import Plugin
 
 
 class SwiftBase(object):
