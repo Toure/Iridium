@@ -27,8 +27,8 @@ setup(
     license="Apache License 2",
     keywords="Openstack test shell",
     url="http://toure.github.io/Iridium/",
-    packages=['iridium', 'test'],
-    long_description=read('README'),
+    packages=['iridium', 'iridium_test'],
+    long_description=read('README.md'),
     classifiers=[
         "Development Status :: 1 - Alpha",
         "Topic :: Utilities",
@@ -36,7 +36,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
-    ], requires=['python-keystoneclient', 'python-novaclient', 'python-glanceclient',
-                 'python-ironicclient', 'python-heatclient', 'python-cinderclient', 'python-swiftclient',
-                 'python-neutronclient', 'python-manilaclient', 'bugzilla', 'IPython', 'tabulate']
+    ], requires=['keystoneclient', 'novaclient', 'glanceclient',
+                 'ironicclient', 'heatclient', 'cinderclient', 'swiftclient',
+                 'neutronclient', 'manilaclient', 'bugzilla', 'IPython', 'tabulate']
 )
