@@ -1,9 +1,9 @@
-from tabulate import tabulate
 from functools import wraps
 from .logger import glob_logger
 from iridium.config import config
 from .exceptions import FunctionException
 import yaml
+from inspect import signature
 
 
 def tracer(func):
@@ -14,7 +14,6 @@ def tracer(func):
     :return: decorated function.
     """
     import pdb
-    from inspect import signature
 
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -36,12 +35,13 @@ def trap(func):
     """
     @wraps(func)
     def wrapper(*args, **kwargs):
-        collector(func.__name__, str(args), str(kwargs))
+        sig = signature(func)
+        collector(func.__name__, str(sig))
         return func(*args, **kwargs)
     return wrapper
 
 
-def collector(fn_name, fn_args, fn_kwargs):
+def collector(fn_name, fn_args):
     """
     collector will format the return information from the
     decorator 'trap' and place it into a simple yaml file.
@@ -56,8 +56,8 @@ def collector(fn_name, fn_args, fn_kwargs):
     if fh.mode != 'a':
         raise "Please make sure %s is writable." % fname
     fn_output = yaml.dump({'Function Attributes': {'Function Name': fn_name,
-                                                   'Function Arguments': fn_args,
-                                                   'Function Keyword Args': fn_kwargs}})
+                                                   'Function Arguments': fn_args}},
+                          indent=4, default_flow_style=False, explicit_start=True)
     status = fh.write(fn_output)
 
     if status > 0:
