@@ -31,3 +31,16 @@ class AmbiguityException(Exception):
     choice should be from the given information
     """
     pass
+
+
+class FunctionException(Exception):
+    """
+    Exception that is thrown when a function raises an error, this is used
+    in conjunction with tracer decorator.
+    """
+    def __init__(self, func_name, value):
+        self.func_name = func_name
+        self.value = value
+
+    def __str__(self):
+        return repr([self.func_name, self.value])

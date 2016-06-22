@@ -1,6 +1,30 @@
 from tabulate import tabulate
 from functools import wraps
-from ..config import config
+from .logger import glob_logger
+from iridium.config import config
+from .exceptions import FunctionException
+
+
+def tracer(func):
+    """
+    tracer will decorate a given function which allow users to step through
+    a function call on error.
+    :param func: Function which is to be wrapped.
+    :return: decorated function.
+    """
+    import pdb
+    from inspect import signature
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        glob_logger.information("calling: {0} with these args: {1}".format(func.__name__, signature(func)))
+        try:
+            return func(*args, **kwargs)
+        except FunctionException as fne:
+            print('We catch a function: {0:s} with a value of: {1:s} doing something bad'.format(fne.func_name,
+                                                                                                 fne.value))
+            pdb.set_trace()
+    return wrapper
 
 
 def trap(func):
