@@ -2,6 +2,9 @@ from iridium.plugins import Plugin
 
 
 class Common(Plugin):
+    def __init__(self, heat_session):
+        self.heat_session = heat_session
+
     def stack_list(self):
         pass
 

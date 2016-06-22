@@ -14,5 +14,14 @@ class IronicBase(object):
         creds = keystone.keystone_retrieve(version='v2')
         ironic_kwargs = {'os_' + k: v for k, v in creds.items()}
         self.ironic_session = client.get_client(version, **ironic_kwargs)
-        plugin = Plugin()
-        self.extension = plugin.activate_plugins('ironic')
+
+    def __getattr__(self, item):
+        """
+        getattr is responsible for searching requested methods which exist in the
+        plugin tree.
+        :param item: name of method
+        :return: remote method.
+        """
+        __plugin = Plugin()
+        __ext = __plugin.activate_plugins('ironic')
+        return getattr(__ext.Common(self.ironic_session), item)

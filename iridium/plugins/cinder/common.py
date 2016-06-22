@@ -7,6 +7,8 @@ class Common(Plugin):
     will require on the command line. Most functions will be loaded with
     defaults to allow for quick function access.
     """
+    def __init__(self, cinder_session):
+        self.cinder_session = cinder_session
 
     def list_zone(self):
         """

@@ -23,5 +23,14 @@ class CinderBase(object):
         ks_kwargs = keystone.keystone_retrieve(**kwargs)
         cinder_auth = [ks_kwargs[key] for key in ["username", "password", "tenant_name", "auth_url"]]
         self.cinder_session = client.Client(version, *cinder_auth)
-        plugin = Plugin()
-        self.extension = plugin.activate_plugins('cinder')
+
+    def __getattr__(self, item):
+        """
+        getattr is responsible for searching requested methods which exist in the
+        plugin tree.
+        :param item: name of method
+        :return: remote method.
+        """
+        __plugin = Plugin()
+        __ext = __plugin.activate_plugins('cinder')
+        return getattr(__ext.Common(self.cinder_session), item)

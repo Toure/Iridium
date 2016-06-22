@@ -18,7 +18,14 @@ class HeatBase(object):
         ks = keystone.create_keystone()
         heat_url = ks.auth_url + '/%s' % ks.tenant_id
         self.heat_session_obj = hc(version, endpoint=heat_url, token=ks.auth_token)
-        plugin = Plugin()
-        self.extension = plugin.activate_plugins('heat')
 
-
+    def __getattr__(self, item):
+        """
+        getattr is responsible for searching requested methods which exist in the
+        plugin tree.
+        :param item: name of method
+        :return: remote method.
+        """
+        __plugin = Plugin()
+        __ext = __plugin.activate_plugins('heat')
+        return getattr(__ext.Common(self.heat_session), item)

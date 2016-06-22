@@ -4,6 +4,8 @@ from iridium.core.downloader import Downloader
 
 
 class Common(Plugin):
+    def __init__(self, glance_session):
+        self.glance_session = glance_session
 
     def glance_image_list(self):
         """

@@ -1,4 +1,4 @@
-from iridium.plugins import Plugin
+from iridium.plugins.inspector import Plugin
 import os
 import json
 import time
@@ -8,6 +8,8 @@ from novaclient.exceptions import NotFound
 
 
 class Common(Plugin):
+    def __init__(self, nova_session):
+        self.nova_session = nova_session
 
     def delete_server(self, compute_instance):
         """

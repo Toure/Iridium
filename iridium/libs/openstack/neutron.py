@@ -12,8 +12,14 @@ class NeutronBase(object):
     def __init__(self):
         creds = keystone.keystone_retrieve()
         self.neutron_session = Client(**creds)
-        plugin = Plugin()
-        self.extension = plugin.activate_plugins('neutron')
 
-
-
+    def __getattr__(self, item):
+        """
+        getattr is responsible for searching requested methods which exist in the
+        plugin tree.
+        :param item: name of method
+        :return: remote method.
+        """
+        __plugin = Plugin()
+        __ext = __plugin.activate_plugins('neutron')
+        return getattr(__ext.Common(self.neutron_session), item)

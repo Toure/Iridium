@@ -30,6 +30,14 @@ class ManilaBase(object):
         keystone_authorization = v2.Password(**keystone_args)
         keystone_session = session.Session(auth=keystone_authorization)
         self.manila_session = client.Client(client_version, session=keystone_session)
-        plugin = Plugin()
-        self.extension = plugin.activate_plugins('manila')
 
+    def __getattr__(self, item):
+        """
+        getattr is responsible for searching requested methods which exist in the
+        plugin tree.
+        :param item: name of method
+        :return: remote method.
+        """
+        __plugin = Plugin()
+        __ext = __plugin.activate_plugins('manila')
+        return getattr(__ext.Common(self.manila_session), item)

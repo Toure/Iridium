@@ -1,7 +1,10 @@
-from iridium.plugins import Plugin
+from iridium.plugins.inspector import Plugin
 
 
 class Common(Plugin):
+    def __init__(self, manila_session):
+        self.manila_session = manila_session
+
     def create_share(self, size, protocol, **kwargs):
         """
         Create a share of the specified size (in GB) and protocol.

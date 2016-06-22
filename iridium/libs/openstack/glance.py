@@ -29,5 +29,14 @@ class GlanceBase(object):
         glance_endpt = url_for(service_type="image", endpoint_type="publicURL") + "/v" + version
         self.glance_session = GlanceFactory(endpoint=glance_endpt,
                                             token=self.keystone_cl.auth_token)
-        plugin = Plugin()
-        self.extension = plugin.activate_plugins('glance')
+
+    def __getattr__(self, item):
+        """
+        getattr is responsible for searching requested methods which exist in the
+        plugin tree.
+        :param item: name of method
+        :return: remote method.
+        """
+        __plugin = Plugin()
+        __ext = __plugin.activate_plugins('glance')
+        return getattr(__ext.Common(self.glance_session), item)

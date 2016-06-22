@@ -2,6 +2,9 @@ from iridium.plugins import Plugin
 
 
 class Common(Plugin):
+    def __init__(self, ironic_session):
+        self.ironic_session = ironic_session
+
     def chassis_create(self, name, count):
         pass
 

@@ -1,8 +1,10 @@
-from iridium.plugins import Plugin
+from iridium.plugins.inspector import Plugin
 from iridium.core.exceptions import AmbiguityException
 
 
 class Common(Plugin):
+    def __init__(self, neutron_session):
+        self.neutron_session = neutron_session
 
     def list_neutron_nets(self, neutron_session, filter_fn=None):
         """
@@ -12,7 +14,7 @@ class Common(Plugin):
         :param filter_fn: a predicate fn (see has_network_field)
         :return: a list of networks filtered through the filter_fn
         """
-        nets = neutron_session.list_networks()["networks"]
+        nets = self.neutron_session.list_networks()["networks"]
         if filter_fn:
             nets = list(filter(filter_fn, nets))
         return nets
