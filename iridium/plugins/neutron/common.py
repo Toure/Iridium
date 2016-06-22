@@ -6,11 +6,10 @@ class Common(Plugin):
     def __init__(self, neutron_session):
         self.neutron_session = neutron_session
 
-    def list_neutron_nets(self, neutron_session, filter_fn=None):
+    def list_neutron_nets(self, filter_fn=None):
         """
         Lists the neutron_tests networks on this deployment
 
-        :param neutron_session: neutron_tests Client object
         :param filter_fn: a predicate fn (see has_network_field)
         :return: a list of networks filtered through the filter_fn
         """
@@ -55,7 +54,7 @@ class Common(Plugin):
 
         return find
 
-    def get_network_uuid(self, neutron_session, name="private", no_ambiguity=True):
+    def get_network_uuid(self, name="private", no_ambiguity=True):
         """
         Retrieves the network UUID from neutron_tests with the matching name.
 
@@ -63,12 +62,11 @@ class Common(Plugin):
         name, raise an AmbiguityException.  If no_ambiguity is False, return the
         first network with this name found.
 
-        :param neutron_session: a neutron_tests client
         :param name: (str) name of the network (eg "public")
         :return: the UUID (str) of the network from neutron_tests
         """
         name_pred = self.has_network_field(name)
-        nets = self.list_neutron_nets(neutron_session, filter_fn=name_pred)
+        nets = self.list_neutron_nets(filter_fn=name_pred)
 
         if len(nets) > 1 and no_ambiguity:
             err = "Found more than one net: ".format(nets)

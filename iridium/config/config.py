@@ -46,7 +46,7 @@ bug_tracker = dict(
 )
 
 iridium_function_calls = dict(
-    function_log='/tmp/iridium_logs/iridium_func_call'
+    function_log='/tmp/iridium_logs/iridium_func_call.yml'
 )
 
 iridium_replay_logs = dict(

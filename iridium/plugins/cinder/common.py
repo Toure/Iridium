@@ -31,8 +31,11 @@ class Common(Plugin):
         :param force: If True, allows an in-use volume to be backed up.
         :rtype: :class:`VolumeBackup`
         """
-        return self.cinder_session.volume_backups.create(volume_id, container=container, name=name,
-                                                         description=description, incremental=incremental, force=force)
+        return self.cinder_session.volume_backups.create(volume_id, container=container,
+                                                         name=name,
+                                                         description=description,
+                                                         incremental=incremental,
+                                                         force=force)
 
     def backup_delete(self, volume):
         """
@@ -51,7 +54,8 @@ class Common(Plugin):
         :param search_opts:
         :return: list of volumes.
         """
-        return self.cinder_session.volume_backups.list(detailed=detailed, search_opts=search_opts)
+        return self.cinder_session.volume_backups.list(detailed=detailed,
+                                                       search_opts=search_opts)
 
     def backup_show(self, backup_id):
         """
@@ -173,7 +177,9 @@ class Common(Plugin):
         :param host_name:
         :return:
         """
-        self.cinder_session.volumes.attach(instance_uuid=instance_uuid, mountpoint=mountpoint, mode=mode,
+        self.cinder_session.volumes.attach(instance_uuid=instance_uuid,
+                                           mountpoint=mountpoint,
+                                           mode=mode,
                                            host_name=host_name)
 
     def vol_detach(self):

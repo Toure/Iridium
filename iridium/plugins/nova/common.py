@@ -11,6 +11,10 @@ class Common(Plugin):
     def __init__(self, nova_session):
         self.nova_session = nova_session
 
+    def foo(self, x, a=None):
+        print('hello %s' % x)
+        print(a)
+
     def delete_server(self, compute_instance):
         """
 

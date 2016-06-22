@@ -3,6 +3,7 @@ from functools import wraps
 from .logger import glob_logger
 from iridium.config import config
 from .exceptions import FunctionException
+import yaml
 
 
 def tracer(func):
@@ -35,40 +36,35 @@ def trap(func):
     """
     @wraps(func)
     def wrapper(*args, **kwargs):
-        fn_calls = list([func.__name__, str(args), kwargs])
-        collector(fn_calls)
+        collector(func.__name__, str(args), str(kwargs))
         return func(*args, **kwargs)
     return wrapper
 
 
-def collector(table_info, headers=None):
+def collector(fn_name, fn_args, fn_kwargs):
     """
     collector will format the return information from the
-    decorator 'trap' and place it into a simple table format
-    with the following structure:
-     table = [["function1", (42, 12, 30), 20],
-              ["function2", (32, 304, 3), 30]]
-     headers = ["Function Name", "Arguments", "Return Values"]
-     :param headers: this defines the layout of the table header see example above.
-     :param table_info: three element list which will contain the format which
-     is described in the docstrings.
+    decorator 'trap' and place it into a simple yaml file.
+     :param fn_name:
+     :param fn_args:
+     :param fn_kwargs:
      :return file creation status and new file.
     """
-    filehandle = open(config.iridium_function_calls['function_log'], mode='a')
-    filename = filehandle.name
+    fh = open(config.iridium_function_calls['function_log'], mode='a')
+    fname = fh.name
 
-    if filehandle.mode != 'a':
-        raise "Please make sure %s is writable." % filename
-    if headers is None:
-        headers = ["Function Name", "Arguments", "Keyword Arguments"]
-    table_out = tabulate(table_info, headers, tablefmt="grid")
-    status = filehandle.write(table_out)
+    if fh.mode != 'a':
+        raise "Please make sure %s is writable." % fname
+    fn_output = yaml.dump({'Function Attributes': {'Function Name': fn_name,
+                                                   'Function Arguments': fn_args,
+                                                   'Function Keyword Args': fn_kwargs}})
+    status = fh.write(fn_output)
 
     if status > 0:
-        ret_val = "Data written to %s" % filename
-        filehandle.close()
+        ret_val = "Data written to %s" % fname
+        fh.close()
     else:
-        ret_val = "Please check %s data was not saved." % filename
-        filehandle.close()
+        ret_val = "Please check %s data was not saved." % fname
+        fh.close()
     return ret_val
 
