@@ -57,7 +57,7 @@ def collector(fn_name, fn_args, *fn_args_val, **fn_kwargs_val):
     fn_output = yaml.dump({'Function Attributes': {'Function Name': fn_name,
                                                    'Function Arguments': fn_args,
                                                    'Function Argument Values': str(fn_args_val),
-                                                   'Function Keyword values': str(fn_kwargs_val)}}, 
+                                                   'Function Keyword values': str(fn_kwargs_val)}},
                           indent=4, default_flow_style=False, explicit_start=True)
     status = fh.write(fn_output)
 
