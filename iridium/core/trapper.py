@@ -17,7 +17,7 @@ def tracer(func):
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-        glob_logger.information("calling: {0} with these args: {1}".format(func.__name__, signature(func)))
+        glob_logger.information("calling: {0} with these args: {1}".format(func.__name__, str(signature(func))))
         try:
             return func(*args, **kwargs)
         except FunctionException as fne:
@@ -35,13 +35,12 @@ def trap(func):
     """
     @wraps(func)
     def wrapper(*args, **kwargs):
-        sig = signature(func)
-        collector(func.__name__, str(sig))
+        collector(func.__name__, str(signature(func)), *args, **kwargs)
         return func(*args, **kwargs)
     return wrapper
 
 
-def collector(fn_name, fn_args):
+def collector(fn_name, fn_args, *fn_args_val, **fn_kwargs_val):
     """
     collector will format the return information from the
     decorator 'trap' and place it into a simple yaml file.
@@ -56,7 +55,9 @@ def collector(fn_name, fn_args):
     if fh.mode != 'a':
         raise "Please make sure %s is writable." % fname
     fn_output = yaml.dump({'Function Attributes': {'Function Name': fn_name,
-                                                   'Function Arguments': fn_args}},
+                                                   'Function Arguments': fn_args,
+                                                   'Function Argument Values': str(fn_args_val),
+                                                   'Function Keyword values': str(fn_kwargs_val)}}, 
                           indent=4, default_flow_style=False, explicit_start=True)
     status = fh.write(fn_output)
 
