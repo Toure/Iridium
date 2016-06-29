@@ -6,7 +6,7 @@ __email__ = "toure@redhat.com"
 __status__ = "Alpha"
 from IPython.terminal.interactiveshell import TerminalInteractiveShell
 import atexit
-import sys
+import argparse
 from iridium.libs.openstack import basestack
 from iridium.libs.trackers import tracker
 from iridium.core.logger import glob_logger
@@ -17,6 +17,7 @@ try:
     import readline
 except ImportError:
     print("readline module not found.")
+
 
 
 class Iridium(TerminalInteractiveShell):
@@ -72,5 +73,28 @@ def load_modules():
     console = Iridium(user_ns=local_modules)
     console.interact()
 
-load_modules()
-atexit.register(save_history)
+
+def cli():
+    """
+    Command line interface will be responsible for providing the end user a way to interact with builtin test or
+    start a interactive shell.
+    :return:
+    """
+    parser = argparse.ArgumentParser(description="Iridium command line interface.")
+    parser.add_argument("-r", "--run-test", dest="run_test", help="Run a specific test from repository.")
+    parser.add_argument("-l", "--list-test", dest="list_test", help="Fetch a list of current test in repository.")
+    parser.add_argument("-o", "--output", dest="output_f", help="Test report output filename, format will be junit/xml.")
+    parser.add_argument("-c", "--credential", dest="creds", help="File which contains credentials for keystone.")
+    parser.add_argument("-s", "--shell", action="store_true", default=False, dest="shell",
+                        help="Start interactive shell session.")
+
+    cli_args = parser.parse_args()
+
+    if cli_args.shell:
+        load_modules()
+        atexit.register(save_history)
+    else:
+        # TODO finish logic for cli flags.
+        parser.print_help()
+
+cli()
