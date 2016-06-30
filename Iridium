@@ -5,6 +5,7 @@ __version__ = "0.1"
 __email__ = "toure@redhat.com"
 __status__ = "Alpha"
 from IPython.terminal.interactiveshell import TerminalInteractiveShell
+from IPython.core.historyapp import HistoryClear
 import atexit
 import argparse
 from iridium.libs.openstack import basestack
@@ -19,12 +20,13 @@ except ImportError:
     print("readline module not found.")
 
 
-
 class Iridium(TerminalInteractiveShell):
     """
     Iridium is the main class which subclasses from the TerminalInteractiveShell class, this allows us to
     embed a repl into the project.
     """
+    def __init__(self):
+        HistoryClear()
 
     @staticmethod
     def enable_gui(gui=None, app=None):
@@ -40,7 +42,6 @@ class Iridium(TerminalInteractiveShell):
         super(Iridium, self).interact(banner)
 
     def raw_input(self, prompt=""):
-        #TODO add logic to create a new profile.
         prompt = "iridium >>> "
         return TerminalInteractiveShell.raw_input(self, prompt)
 
@@ -83,6 +84,8 @@ def cli():
     parser = argparse.ArgumentParser(description="Iridium command line interface.")
     parser.add_argument("-r", "--run-test", dest="run_test", help="Run a specific test from repository.")
     parser.add_argument("-l", "--list-test", dest="list_test", help="Fetch a list of current test in repository.")
+    parser.add_argument("-b", "--build-test", dest="build_test", help="Build test will take a list of information"
+                                                                      "to")
     parser.add_argument("-o", "--output", dest="output_f", help="Test report output filename, format will be junit/xml.")
     parser.add_argument("-c", "--credential", dest="creds", help="File which contains credentials for keystone.")
     parser.add_argument("-s", "--shell", action="store_true", default=False, dest="shell",
