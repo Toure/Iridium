@@ -5,19 +5,20 @@ __version__ = "0.1"
 __email__ = "toure@redhat.com"
 __status__ = "Alpha"
 from IPython.terminal.interactiveshell import TerminalInteractiveShell
-from IPython.core.historyapp import HistoryClear
 import atexit
-import argparse
+from iridium.config.config import Cli
 from iridium.libs.openstack import basestack
 from iridium.libs.trackers import tracker
 from iridium.core.logger import glob_logger
 from iridium.core.logger import make_timestamped_filename
-from iridium.config import config
+from iridium.config.config import Config
 
 try:
     import readline
 except ImportError:
     print("readline module not found.")
+
+CFG = Config()
 
 
 class Iridium(TerminalInteractiveShell):
@@ -25,9 +26,6 @@ class Iridium(TerminalInteractiveShell):
     Iridium is the main class which subclasses from the TerminalInteractiveShell class, this allows us to
     embed a repl into the project.
     """
-    def __init__(self):
-        HistoryClear()
-
     @staticmethod
     def enable_gui(gui=None, app=None):
         pass
@@ -53,7 +51,7 @@ def save_history():
     """
     # TODO figure out why this is not appending log details.
     glob_logger.info("Saving History...")
-    log_path = config.logging['log_dir'] + make_timestamped_filename('iridium_cli_history')
+    log_path = CFG.cfg_manager('log_dir') + make_timestamped_filename('iridium_cli_history')
     readline.write_history_file(log_path)
 
 
@@ -70,34 +68,12 @@ def load_modules():
     for mod_name in module_list:
         local_modules[mod_name+'_cls'] = stack_modules.import_mod(mod_name)
 
-    local_modules['tracker_mod'] = tracker_module.import_mod(config.bug_tracker['tracker'])
+    local_modules['tracker_mod'] = tracker_module.import_mod(CFG.cfg_manager('tracker'))
     console = Iridium(user_ns=local_modules)
     console.interact()
+    atexit.register(save_history)
 
 
-def cli():
-    """
-    Command line interface will be responsible for providing the end user a way to interact with builtin test or
-    start a interactive shell.
-    :return:
-    """
-    parser = argparse.ArgumentParser(description="Iridium command line interface.")
-    parser.add_argument("-r", "--run-test", dest="run_test", help="Run a specific test from repository.")
-    parser.add_argument("-l", "--list-test", dest="list_test", help="Fetch a list of current test in repository.")
-    parser.add_argument("-b", "--build-test", dest="build_test", help="Build test will take a list of information"
-                                                                      "to")
-    parser.add_argument("-o", "--output", dest="output_f", help="Test report output filename, format will be junit/xml.")
-    parser.add_argument("-c", "--credential", dest="creds", help="File which contains credentials for keystone.")
-    parser.add_argument("-s", "--shell", action="store_true", default=False, dest="shell",
-                        help="Start interactive shell session.")
+cli_args = Cli(load_modules)
+cli_args.cli()
 
-    cli_args = parser.parse_args()
-
-    if cli_args.shell:
-        load_modules()
-        atexit.register(save_history)
-    else:
-        # TODO finish logic for cli flags.
-        parser.print_help()
-
-cli()

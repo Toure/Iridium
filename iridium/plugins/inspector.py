@@ -1,6 +1,6 @@
 from importlib import import_module
 import os
-from ..core.trapper import trap
+from iridium.core.trapper import trap
 
 
 class Inspector(type):
