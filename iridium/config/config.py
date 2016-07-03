@@ -11,7 +11,7 @@ CONF = """
 --- Openstack base configurations for API services.
 auth_info:
   v2:
-    auth_url: 'http://10.13.57.54:5000/v2.0/'
+    auth_url: 'http://localhost:5000/v2.0/'
     username: 'admin'
     password: '60b170ff33d84278'
     tenant_name: 'admin'

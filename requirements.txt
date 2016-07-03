@@ -20,3 +20,4 @@ untangle
 pytest
 #oslogmerger
 tabulate
+confuse
