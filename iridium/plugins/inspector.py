@@ -38,6 +38,7 @@ class Plugin(object, metaclass=Inspector):
         :param package_name: name of package to append to basedir
         :return: plugin.
         """
+        # TODO replace this logic with pkgutil.
         root_dir = os.path.abspath(os.path.dirname(__file__))
         basedir = root_dir + '/' + package_name
         for basedir, dirs, files in os.walk(basedir):

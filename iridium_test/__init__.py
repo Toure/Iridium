@@ -8,17 +8,18 @@ This will be the standard location for all test that are separated via component
 for flexible test execution, instead of a all or nothing approach.
 """
 
-class TestRepo(object):
 
-    def list_test(self):
-        """
-        List test will walk the test repo and return the information to the requester.
-        """
-        pass
+def list_test():
+    """
+    List test will walk the test repo and return the information to the requester.
+    """
+    root_dir = os.path.abspath(os.path.dirname(__file__))
+    pass
 
-    def find_test(self, test_name):
-        """
-        Find test will walk the test repo for a specific key value.
-        """
-        pass
+
+def find_test(test_name):
+    """
+    Find test will walk the test repo for a specific key value.
+    """
+    pass
 

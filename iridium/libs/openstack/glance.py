@@ -15,8 +15,6 @@ from glanceclient import Client as GlanceFactory
 from iridium.libs.openstack import keystone
 
 
-class GlanceError(Exception):
-    pass
 
 
 class GlanceBase(object):

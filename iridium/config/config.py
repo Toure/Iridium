@@ -6,6 +6,7 @@ __status__ = "Alpha"
 import argparse
 import confuse
 import sys
+import yaml
 
 CONF = """
 --- Openstack base configurations for API services.
@@ -40,6 +41,7 @@ iridium_function_call:
 class Cli(object):
     def __init__(self, shell_fn):
         self.shell_fn = shell_fn
+        self.cfg = confuse.LazyConfig('Iridium')
 
     def write_config(self):
         """
@@ -61,8 +63,8 @@ class Cli(object):
         if cli_args.shell:
             # call the function responsible for starting the interactive shell.
             self.shell_fn()
-        elif cli_args is None:
-            cli_args.
+        else:
+            self.cfg.set_args(cli_args)
 
     def cli(self):
         """

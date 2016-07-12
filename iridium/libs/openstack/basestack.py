@@ -6,7 +6,6 @@ __status__ = "Alpha"
 
 from importlib import import_module
 import inspect
-
 from .keystone import create_keystone
 
 
@@ -26,5 +25,4 @@ class Basestack(object):
         else:
             class_name = [obj for name, obj in inspect.getmembers(import_module(
                 "iridium.libs.openstack.%s" % module_name)) if inspect.isclass(obj)][0]
-
         return class_name

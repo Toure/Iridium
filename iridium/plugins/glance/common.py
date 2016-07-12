@@ -1,6 +1,11 @@
 import os
-from iridium.plugins import Plugin
+from iridium.plugins.inspector import Plugin
 from iridium.core.downloader import Downloader
+from iridium.core.exceptions import ArgumentError
+
+
+class GlanceError(Exception):
+    pass
 
 
 class Common(Plugin):
@@ -69,9 +74,6 @@ class Common(Plugin):
                                               disk_format=disk_format, properties=properties,
                                               container_format=container_format)
 
-        # stupidly, the python-glanceclient Image.create() does not return anything
-        # so let'nova_tests figure out if it was successful or not and return the newly
-        # created glance image
         images = self.glance_image_list()
         img = self.glance_images_by_name(img_name, images)
         if not img:

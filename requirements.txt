@@ -19,5 +19,5 @@ libvirt-python
 untangle
 pytest
 #oslogmerger
-tabulate
+yaml
 confuse
