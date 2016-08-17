@@ -15,9 +15,9 @@ python-manilaclient
 python-jenkins
 gerritlib
 httplib2
-libvirt-python
+#libvirt-python
 untangle
 pytest
 #oslogmerger
-yaml
+PyYAML
 confuse
