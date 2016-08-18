@@ -24,8 +24,8 @@ Iridium REPL will allow you to attach to an existing OpenStack deployment and qu
 exercise the related OpenStack function.
 
 ```bash
-sh> python cli.py
-iridium >>> nova = nova_mod.NovaBase()
+sh> ./Iridium
+iridium >>> nova = NovaBase()
 iridium >>> dir(nova)
 [...'filter_by', 'get_by_id', 'get_by_name', 'get_keystone_init'...]
 ```
@@ -36,9 +36,9 @@ Iridium will also give the users the ability to import functionality which can b
 OpenStack.
 
 ```python
-import libs.openstack
-import libs.infrastructure
-import libs.trackers
+import iridium.libs.openstack
+import iridium.libs.infrastructure
+import iridium.libs.trackers
 ```
 
 ## Contributing
