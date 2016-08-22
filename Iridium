@@ -6,7 +6,6 @@ __email__ = "toure@redhat.com"
 __status__ = "Alpha"
 from IPython.terminal.interactiveshell import TerminalInteractiveShell
 import atexit
-from iridium.config.config import Cli
 from iridium.libs.openstack import basestack
 from iridium.libs.trackers import tracker
 from iridium.core.logger import glob_logger
@@ -74,6 +73,6 @@ def load_modules():
     atexit.register(save_history)
 
 
-cli_args = Cli(load_modules)
-cli_args.cli()
+CFG.loadshell(load_modules)
+
 

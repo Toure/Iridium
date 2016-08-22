@@ -1,0 +1,30 @@
+---
+# Openstack base configurations for API services.
+auth_info:
+  v2:
+    auth_url: 'http://localhost:5000/v2.0/'
+    username: 'admin'
+    password: '60b170ff33d84278'
+    tenant_name: 'admin'
+  v3:
+    auth_url: 'http://localhost:5000/v3'
+    username: 'admin'
+    password: 'password'
+    project_name: 'admin'
+    user_domain_name: 'default'
+    project_domain_name: 'default'
+
+logging:
+  log_dir: '/tmp/iridium_logs/'
+
+interactive_shell:
+  shell: True
+
+rdo_clones:
+  base: '/tmp/rdo_clones/'
+
+bug_tracker:
+  tracker: 'bugz'
+
+iridium_function_call:
+  function_log: '/tmp/iridium_logs/iridium_func_call.yml'

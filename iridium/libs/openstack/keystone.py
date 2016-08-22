@@ -12,7 +12,9 @@ import os
 
 from keystoneclient.v2_0 import client
 from iridium.core.logger import glob_logger
-from iridium.config import config
+from iridium.config.config import Config
+
+CFG = Config()
 
 
 def keystone_retrieve(version: str= 'v2', read_export: bool = False, **kwargs: dict) -> dict:
@@ -33,6 +35,9 @@ def keystone_retrieve(version: str= 'v2', read_export: bool = False, **kwargs: d
     :rtype : dict
     :return: A dictionary that can be used with keystone client.
     """
+    coll = CFG.dump_config(CFG.config_file)
+    creds_coll = CFG.lookup(coll=coll, search_key=version)
+
     if not kwargs and read_export:
         glob_logger.info("Reading Environmental variables..")
         creds = {
@@ -44,7 +49,7 @@ def keystone_retrieve(version: str= 'v2', read_export: bool = False, **kwargs: d
 
     # Here we use built-in config file.
     if not kwargs:
-        creds = {k: v for k, v in config.auth_info[version].items()
+        creds = {k: v for k, v in creds_coll.items()
                  if v is not None}
     # Else we allow override of built-in dictionary.
     elif kwargs:
