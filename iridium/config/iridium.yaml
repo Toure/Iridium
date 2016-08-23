@@ -2,9 +2,9 @@
 # Openstack base configurations for API services.
 auth_info:
   v2:
-    auth_url: 'http://localhost:5000/v2.0/'
+    auth_url: 'http://10.13.57.223:5000/v2.0/'
     username: 'admin'
-    password: '60b170ff33d84278'
+    password: 'ddbe6117ce23e2926c8eeb09b79dd75032ece9ac'
     tenant_name: 'admin'
   v3:
     auth_url: 'http://localhost:5000/v3'

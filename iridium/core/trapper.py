@@ -1,10 +1,11 @@
 from functools import wraps
 from .logger import glob_logger
-from iridium.config import config
+from iridium.config.config import Config
 from .exceptions import FunctionException
 import yaml
 from inspect import signature
 
+CFG = Config()
 
 def tracer(func):
     """
@@ -49,7 +50,7 @@ def collector(fn_name, fn_args, *fn_args_val, **fn_kwargs_val):
      :param fn_kwargs:
      :return file creation status and new file.
     """
-    fh = open(config.iridium_function_calls['function_log'], mode='a')
+    fh = open(CFG.cfg_manager("function_log"), mode='a')
     fname = fh.name
 
     if fh.mode != 'a':

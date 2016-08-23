@@ -27,6 +27,8 @@ parser.add_argument("-fl", "--function_call_log", dest="fn_call_log", help="Name
 parser.add_argument("-bt", "--bug_tracker", dest="b_tracker", help="Name of given bug track system."
                                                                    "Supported ones are Bugzilla and Launchpad.")
 
+args = parser.parse_args()
+
 
 class Config(object):
     config_file = CONF
@@ -38,7 +40,7 @@ class Config(object):
         :param shell_function: function responsible for spawning the interactive shell
         (load_modules).
         """
-        if self.cfg_manager("shell"):
+        if args.shell:
             print("starting a shell.")
             shell_function()
 
@@ -52,7 +54,7 @@ class Config(object):
         """
         coll = self.dump_config(collection)
         config_value = self.lookup(coll, key)
-        cli_value = self.lookup(vars(parser.parse_args()), key)
+        cli_value = self.lookup(vars(args), key)
 
         if cli_value is not None:
             return cli_value

@@ -35,12 +35,11 @@ class Iridium(TerminalInteractiveShell):
                  "(_  _)(  _ \(_  _)(  _ \(_  _)(  )(  )(  \/  )\n " \
                  "_)(_  )   / _)(_  )(_) )_)(_  )(__)(  )    (\n" \
                  "(____)(_)\_)(____)(____/(____)(______)(_/\/\_)\n"
+        super(Iridium, self).show_banner(banner)
 
-        super(Iridium, self).interact(banner)
-
-    def raw_input(self, prompt=""):
-        prompt = "iridium >>> "
-        return TerminalInteractiveShell.raw_input(self, prompt)
+    # def raw_input(self, prompt=""):
+    #     prompt = "iridium >>> "
+    #     return TerminalInteractiveShell.raw_input_original(prompt)
 
 
 def save_history():
