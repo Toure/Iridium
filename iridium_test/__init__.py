@@ -7,6 +7,7 @@ __status__ = "Alpha"
 This will be the standard location for all test that are separated via component name, which will allow
 for flexible test execution, instead of a all or nothing approach.
 """
+import os
 
 
 def list_test():

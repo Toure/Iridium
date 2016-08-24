@@ -23,21 +23,30 @@ class Config(object):
         :return: Parser object
         """
         parser = argparse.ArgumentParser(description="Iridium command line interface.")
-        parser.add_argument("-r", "--run-test", dest="run_test", help="Run a specific test from repository.")
-        parser.add_argument("-l", "--list-test", dest="list_test", help="Fetch a list of current test in repository.")
-        parser.add_argument("-b", "--build-test", dest="build_test", help="Build test will take a list of information"
-                                                                          "to")
+        parser.add_argument("-r", "--run-test", dest="run_test",
+                            help="Run a specific test from repository.")
+        parser.add_argument("-l", "--list-test", dest="list_test",
+                            help="Fetch a list of current test in repository.")
+        parser.add_argument("-b", "--build-test", dest="build_test",
+                            help="Build test will take a list of components"
+                                 "and group them into a over arching functional"
+                                 "test.")
         parser.add_argument("-o", "--output", dest="output_f",
                             help="Test report output filename, format will be junit/xml.")
-        parser.add_argument("-c", "--credential", dest="creds", help="File which contains credentials for keystone.")
+        parser.add_argument("-c", "--credential", dest="creds",
+                            help="File which contains credentials for keystone.")
         parser.add_argument("-s", "--shell", action="store_true", default=False, dest="shell",
                             help="Start interactive shell session.")
-        parser.add_argument("-au", "--auth_url", dest="auth_url", help="URL of the controller which to attach.")
-        parser.add_argument("-ld", "--log_dir", dest="log_dir", help="Path for Iridium to store log files.")
-        parser.add_argument("-fl", "--function_call_log", dest="fn_call_log", help="Name of the replay function call "
-                                                                                   "log")
-        parser.add_argument("-bt", "--bug_tracker", dest="b_tracker", help="Name of given bug track system."
-                                                                           "Supported ones are Bugzilla and Launchpad.")
+        parser.add_argument("-au", "--auth_url", dest="auth_url",
+                            help="URL of the controller which to attach.")
+        parser.add_argument("-ld", "--log_dir", dest="log_dir",
+                            help="Path for Iridium to store log files.")
+        parser.add_argument("-fl", "--function_call_log", dest="fn_call_log",
+                            help="Name of the replay function call "
+                                 "log")
+        parser.add_argument("-bt", "--bug_tracker", dest="b_tracker",
+                            help="Name of given bug track system."
+                                 "Supported ones are Bugzilla and Launchpad.")
 
         if len(sys.argv) == 1:
             parser.print_help()
@@ -57,7 +66,7 @@ class Config(object):
 
     def cfg_manager(self, key, collection=CONF):
         """
-        Config manager will search configurations file and cli for a given key and give presidence to the non-Null
+        Config manager will search configurations file and cli for a given key and give precedence to the non-Null
         value from the cli.
         :param collection: yaml file which contains configuration data.
         :param key: search value to lookup in yaml structure.
