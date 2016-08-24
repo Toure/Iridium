@@ -1,4 +1,3 @@
-IPython
 # Installation of the following packages / libraries are needed to properly utilize Iridium.
 python-openstackclient
 python-keystoneclient
