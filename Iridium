@@ -30,7 +30,7 @@ class Iridium(InteractiveConsole, Config):
     def __init__(self, local):
         InteractiveConsole.__init__(self, locals=local)
         Config.__init__(self)
-        self.log_dir_path = super().cfg_manager('log_dir')
+        self.log_dir_path = self.cfg_manager('log_dir')
 
     @staticmethod
     def enable_gui(gui=None, app=None):
@@ -42,11 +42,11 @@ class Iridium(InteractiveConsole, Config):
                  "(_  _)(  _ \(_  _)(  _ \(_  _)(  )(  )(  \/  )\n " \
                  "_)(_  )   / _)(_  )(_) )_)(_  )(__)(  )    (\n" \
                  "(____)(_)\_)(____)(____/(____)(______)(_/\/\_)\n"
-        super().interact(banner)
+        self.interact(banner)
 
     def raw_input(self, prompt=""):
         prompt = "iridium >>> "
-        return super().raw_input(prompt)
+        return self.raw_input(prompt)
 
     def load_history(self, recall_history=False):
         """

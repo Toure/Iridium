@@ -21,7 +21,7 @@ def read(fname):
 setup(
     name="Iridium",
     version="0.1",
-    author="Toure Dunnon",
+    author="Toure Dunnon, Dustin Schoenbrun",
     author_email="toure@redhat.com",
     description="OpenStack functional test framework.",
     license="Apache License 2",
