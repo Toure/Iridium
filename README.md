@@ -25,7 +25,7 @@ exercise the related OpenStack function.
 
 ```bash
 sh> ./Iridium
-iridium >>> nova = NovaBase()
+iridium >>> nova = nova_cls()
 iridium >>> dir(nova)
 [...'filter_by', 'get_by_id', 'get_by_name', 'get_keystone_init'...]
 ```

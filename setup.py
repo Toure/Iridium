@@ -23,7 +23,7 @@ setup(
     version="0.1",
     author="Toure Dunnon, Dustin Schoenbrun",
     author_email="toure@redhat.com",
-    description="OpenStack functional test framework.",
+    description="OpenStack functional test shell.",
     license="Apache License 2",
     keywords="Openstack test shell",
     url="http://toure.github.io/Iridium/",
