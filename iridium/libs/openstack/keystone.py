@@ -16,8 +16,6 @@ from iridium.core.logger import glob_logger
 from iridium.config.config import Config
 from iridium.config.config import CONF as IRIDIUM_CONF
 
-CFG = Config()
-
 
 class KeystoneBase(Config):
     def __init__(self):

@@ -2,19 +2,18 @@ __author__ = 'toure'
 
 
 from iridium.plugins.inspector import Plugin
-import novaclient.client as nvclient
-from iridium.libs.openstack import keystone
+from novaclient import client as nova_client
+from iridium.libs.openstack.keystone import KeystoneBase
 
 
-class NovaBase(object):
+class NovaBase(KeystoneBase):
     """
     This class is serving as a common interface for both local plugins as well as
     openstack client methods.
     """
     def __init__(self, version='2'):
-        creds = keystone.keystone_retrieve(version='v2')
-        nova_cred_list = [creds[key] for key in ["username", "password", "tenant_name", "auth_url"]]
-        self.nova_session = nvclient.Client(version, *nova_cred_list)
+        super().__init__()
+        self.nova_session = nova_client.Client(version, self.keystone_obj)
 
     def __getattr__(self, item):
         """
