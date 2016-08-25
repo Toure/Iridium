@@ -10,9 +10,9 @@ auth_info:
     auth_url: 'http://localhost:5000/v3'
     username: 'admin'
     password: 'password'
-    project_name: 'admin'
-    user_domain_name: 'default'
-    project_domain_name: 'default'
+    project_id: 'admin'
+    user_domain_id: 'default'
+    project_id: 'default'
 
 logging:
   log_dir: '/tmp/iridium_logs/'
