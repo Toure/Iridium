@@ -7,14 +7,14 @@ import argparse
 import os
 import yaml
 import sys
+from iridium.core.decorators import singleton
 
 current_dir = os.path.dirname(__file__)
 CONF = os.path.join(current_dir, "./iridium.yaml")
 
 
-class Config(object):
-    def __init__(self):
-        self.args = self.create_parser()
+@singleton
+class Cli(object):
 
     @staticmethod
     def create_parser():
@@ -53,6 +53,12 @@ class Config(object):
             exit(1)
         else:
             return parser.parse_args()
+
+
+class Config(Cli):
+    def __init__(self):
+        Cli.__init__(self)
+        self.args = self.create_parser()
 
     def load_shell(self, shell_function):
         """
@@ -106,7 +112,7 @@ class Config(object):
                 print(ye)
 
     def update_config(self, config_obj):
-            # TODO add function to perform persistent update of yaml file.
+        # TODO add function to perform persistent update of yaml file.
         pass
 
     @staticmethod

@@ -42,11 +42,11 @@ class Iridium(InteractiveConsole, Config):
                  "(_  _)(  _ \(_  _)(  _ \(_  _)(  )(  )(  \/  )\n " \
                  "_)(_  )   / _)(_  )(_) )_)(_  )(__)(  )    (\n" \
                  "(____)(_)\_)(____)(____/(____)(______)(_/\/\_)\n"
-        self.interact(banner)
+        super().interact(banner)
 
     def raw_input(self, prompt=""):
         prompt = "iridium >>> "
-        return self.raw_input(prompt)
+        return super().raw_input(prompt)
 
     def load_history(self, recall_history=False):
         """
