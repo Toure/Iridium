@@ -1,10 +1,11 @@
-import os
-import importlib
 import sys
 
-import iridium.core
-from iridium.config import config
+import importlib
+import os
 
+from iridium.config.configmanager import ConfigManager
+
+configmanager = ConfigManager()
 
 def add_client_to_path(base_dir=None, debug=False, base_clients=None):
     """
@@ -32,7 +33,7 @@ def add_client_to_path(base_dir=None, debug=False, base_clients=None):
         client = "python-{}client"
         if base_dir is None:
             # use the location from smog_config.yml
-            base_dir = config.rdo_clones['base']
+            base_dir = configmanager.cfg_manager('rdo_clones')
 
         if not os.path.isdir(base_dir):
             raise Exception("Unable to find base directory to load modules {}".format(base_dir))

@@ -7,13 +7,11 @@ import argparse
 import os
 import yaml
 import sys
-from iridium.core.decorators import singleton
 
 current_dir = os.path.dirname(__file__)
 CONF = os.path.join(current_dir, "./iridium.yaml")
 
 
-@singleton
 class Cli(object):
 
     @staticmethod
@@ -55,7 +53,7 @@ class Cli(object):
             return parser.parse_args()
 
 
-class Config(Cli):
+class ConfigManager(Cli):
     def __init__(self):
         Cli.__init__(self)
         self.args = self.create_parser()
@@ -72,7 +70,7 @@ class Config(Cli):
 
     def cfg_manager(self, key, collection=CONF):
         """
-        Config manager will search configurations file and cli for a given key and give precedence to the non-Null
+        ConfigManager manager will search configurations file and cli for a given key and give precedence to the non-Null
         value from the cli.
         :param collection: yaml file which contains configuration data.
         :param key: search value to lookup in yaml structure.
@@ -127,3 +125,31 @@ class Config(Cli):
             yaml.dump(config_dict, cfg_stream)
             cfg_stream.write("\n")
         cfg_stream.close()
+
+
+class Dispatch(Cli):
+    def __init__(self):
+        super().__init__()
+
+    def list_test(self):
+        """
+        List test will display current configured tetst.
+        :return:
+        """
+        pass
+
+    def run_test(self, testname):
+        """
+        Run test will dispatch given test name.
+        :return:
+        """
+        pass
+
+    def build_test(self, testlist):
+        """
+        Build test will take a list of test names and create a group
+        functional test.
+        :param testlist:
+        :return:
+        """
+        pass

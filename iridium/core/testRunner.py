@@ -2,9 +2,9 @@
 Test Runner will receive command line test specifications and component names to execute against
 pre-defined py.test.
 """
-from iridium.config.config import Config
+from config.configmanager import ConfigManager
 
 
-class TestRunner(Config):
+class TestRunner(ConfigManager):
     def __init__(self):
         super().__init__()

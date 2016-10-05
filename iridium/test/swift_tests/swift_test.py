@@ -4,7 +4,9 @@ __version__ = "0.1"
 __email__ = "toure@redhat.com"
 __status__ = "Alpha"
 
+import pytest
 
+@pytest
 def test_object_creation():
     pass
 

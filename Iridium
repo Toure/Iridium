@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 
-from code import InteractiveConsole
 import atexit
-from iridium.libs.openstack import basestack
-from iridium.libs.trackers import tracker
+from code import InteractiveConsole
+
+import os
+
+from iridium.config.configmanager import ConfigManager
 from iridium.core.logger import glob_logger
 from iridium.core.logger import make_timestamped_filename
-from iridium.config.config import Config
-import os
+from iridium.libs.openstack import basestack
+from iridium.libs.trackers import tracker
 
 try:
     import readline
@@ -18,18 +20,17 @@ else:
 
     readline.parse_and_bind("tab: complete")
 
-cfg = Config()
 
-
-class Iridium(InteractiveConsole, Config):
+class Iridium(InteractiveConsole, ConfigManager):
     """
     Iridium is the main class which subclasses from the TerminalInteractiveShell class, this allows us to
     embed a repl into the project.
     """
 
     def __init__(self, local):
-        InteractiveConsole.__init__(self, locals=local)
-        Config.__init__(self)
+        self.local = local
+        InteractiveConsole.__init__(self, locals=self.local)
+        ConfigManager.__init__(self)
         self.log_dir_path = self.cfg_manager('log_dir')
 
     @staticmethod
@@ -71,25 +72,27 @@ class Iridium(InteractiveConsole, Config):
         log_path = self.log_dir_path + make_timestamped_filename('iridium_cli_history')
         readline.write_history_file(log_path)
 
+    def load_modules(self):
+        """
+        Load module will construct all plugin objects for the shell enviornment, and start
+        the shell.
+        """
+        stack_modules = basestack.Basestack
+        tracker_module = tracker.TrackerBase()
+        module_list = ['nova', 'keystone', 'ironic', 'heat', 'swift', 'glance', 'cinder', 'manila', 'neutron']
 
-def load_modules():
-    """
-    Load module will construct all plugin objects for the shell enviornment, and start
-    the shell.
-    """
-    local_modules = locals()
-    stack_modules = basestack.Basestack
-    tracker_module = tracker.TrackerBase()
-    module_list = ['nova', 'keystone', 'ironic', 'heat', 'swift', 'glance', 'cinder', 'manila', 'neutron']
+        for mod_name in module_list:
+            self.local[mod_name + '_cls'] = stack_modules.import_mod(mod_name)
 
-    for mod_name in module_list:
-        local_modules[mod_name + '_cls'] = stack_modules.import_mod(mod_name)
+        self.local['tracker_mod'] = tracker_module.import_mod(self.cfg_manager('tracker'))
+        self.interact()
+        atexit.register(self.save_history)
 
-    local_modules['tracker_mod'] = tracker_module.import_mod(cfg.cfg_manager('tracker'))
-    console = Iridium(local_modules)
-    console.interact()
-    atexit.register(console.save_history)
+    def start_shell(self):
+        return self.load_shell(self.load_modules)
 
 
-cfg.load_shell(load_modules)
-cfg.create_parser()
+if __name__ == "__main__":
+    iridium = Iridium(locals())
+    iridium.create_parser()
+

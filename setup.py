@@ -27,7 +27,7 @@ setup(
     license="Apache License 2",
     keywords="Openstack test shell",
     url="http://toure.github.io/Iridium/",
-    packages=['iridium', 'iridium_test'],
+    packages=['iridium', 'test'],
     long_description=read('README.md'),
     classifiers=[
         "Development Status :: 1 - Alpha",

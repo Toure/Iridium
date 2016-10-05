@@ -9,13 +9,13 @@ Keystone module which will be responsible for authentication and base keystone c
 """
 
 import os
-
 from keystoneclient.v2_0 import client
-from iridium.core.logger import glob_logger
-from iridium.config.config import Config
-from iridium.config.config import CONF as IRIDIUM_CONF
 
-CFG = Config()
+from config.configmanager import CONF as IRIDIUM_CONF
+from config.configmanager import ConfigManager
+from iridium.core.logger import glob_logger
+
+CFG = ConfigManager()
 
 
 def keystone_retrieve(version: str= 'v2', read_export: bool = False, **kwargs: dict) -> dict:

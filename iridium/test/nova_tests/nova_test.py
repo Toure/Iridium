@@ -17,8 +17,8 @@ def nova_auth():
 @pytest.mark.create_instance
 def test_instance_creation(nova_auth):
     glob_logger.info("Nova instance creation test...")
-    #assert nova_auth.boot_instance('iridium_test', '6348bd72-602f-41ce-99fa-49c6789bbeb3', '1')
-    assert nova_auth.boot_instance('iridium_test', '22b40f63-2b37-4855-8f32-07da65bd3c43', '1')
+    #assert nova_auth.boot_instance('test', '6348bd72-602f-41ce-99fa-49c6789bbeb3', '1')
+    assert nova_auth.boot_instance('test', '22b40f63-2b37-4855-8f32-07da65bd3c43', '1')
 
 @pytest.mark.create_multiple_instances
 def test_instance_create_multi(nova_auth):

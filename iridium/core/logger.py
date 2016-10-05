@@ -8,9 +8,9 @@ import logging
 import time
 import os
 
-from iridium.config.config import Config
+from iridium.config.configmanager import ConfigManager
 
-config = Config()
+cm = ConfigManager()
 
 
 def make_timestamp():
@@ -117,7 +117,7 @@ def _glob_logger(log_dir=None):
     :return:
     """
     if log_dir is None:
-        log_dir = config.cfg_manager("log_dir")
+        log_dir = cm.cfg_manager("log_dir")
 
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)

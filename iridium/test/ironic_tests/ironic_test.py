@@ -5,17 +5,24 @@ __email__ = "toure@redhat.com"
 __status__ = "Alpha"
 
 import pytest
+from iridium.libs.openstack import ironic
+from iridium.core.logger import glob_logger
 
+@pytest.fixture
+def test_client_session():
+    ironic_cl = ironic.IronicBase()
+    return ironic_cl
 
 # Chassis test.
 @pytest.mark.chassis
-def test_create_chassis():
-    pass
+def test_create_chassis(ironic_cl):
+    glob_logger.info("creating chassis")
+    ironic_cl.create_chassis("pytest_chassis")
 
 
 @pytest.mark.chassis
-def test_list_chassis():
-    pass
+def test_list_chassis(ironic_cl):
+    glob_logger.info("")
 
 
 @pytest.mark.chassis

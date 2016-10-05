@@ -1,6 +1,6 @@
 from importlib import import_module
 import os
-from iridium.core.trapper import trap
+from iridium.core.decorators import trap
 
 
 class Inspector(type):
@@ -13,7 +13,8 @@ class Inspector(type):
         """Called when a Plugin derived class is imported"""
         cls.introspect_class(cls, attrs)
 
-    def introspect_class(cls, plugin: object, attrs: object) -> object:
+    @staticmethod
+    def introspect_class(plugin: object, attrs: object) -> object:
         """Allows for injection of additional functionality
         :param attrs: attributes of class which contains a dictionary of methods and other non-callable.
         :param plugin: class object to be registered to the plugins dict.
